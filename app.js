@@ -25,7 +25,7 @@ function render(year, coords,layer,style,spinner){
                         spinner.stop(target);
                         });
                     }
-            }).error(function() {spinner.stop(target);alert ('Ouch! There was an error. Try a smaller box and make sure you are around the California area')});
+            }).error(function() {spinner.stop(target);alert ('Ouch! There was an error. Try a smaller area')});
     }
 
 
@@ -182,7 +182,7 @@ function main() {
                         spinner.stop(target);
                         });
                     }
-            }).error(function(errors) {spinner.stop(target);alert ('Ouch! There was an error. Try a smaller box and make sure you are around the California area')});
+            }).error(function(errors) {spinner.stop(target);alert ('Ouch! There was an error. Try a smaller area')});
 
 
         }
