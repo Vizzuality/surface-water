@@ -164,25 +164,9 @@ function main() {
             drawnItems.clearLayers(); 
             spinner.spin(target)
 
-            $.ajax({
-                dataType: "json",
-                url: "http://vizz.water-test.appspot.com/water?coords="+pol_pgis+"&date="+year+"-01-01",
-                    success: function(data) {
-                        console.log(data);
-                        boundary.clearLayers(); 
-                        
+            render(year, pol_pgis,boundary,waterStyle,spinner)
+            $('#yearcontrol').fadeIn('slow');
 
-                        $(data.result.features).each(function(key, data) {
-                        boundary.addData(data);
-                        boundary.setStyle(waterStyle);
-                        $('#yearcontrol').fadeIn('slow');
-                        
-                        //year++;
-                        //year=(year>2011)?1999:year;
-                        spinner.stop(target);
-                        });
-                    }
-            }).error(function(errors) {spinner.stop(target);alert ('Ouch! There was an error. Try a smaller area')});
 
 
         }
