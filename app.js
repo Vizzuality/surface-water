@@ -88,7 +88,7 @@ function main() {
 
     // Add CartoDB basemaps
     L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-        attribution: '<a href="http://cartodb.com">CartoDB</a> © 2014',
+        attribution: '',
         maxZoom: 18
     }).addTo(map);
 
@@ -172,6 +172,7 @@ function main() {
                         boundary.clearLayers(); 
                         
 
+
                         $(data.result.features).each(function(key, data) {
                         boundary.addData(data);
                         boundary.setStyle(waterStyle);
@@ -181,6 +182,47 @@ function main() {
                         //year=(year>2011)?1999:year;
                         spinner.stop(target);
                         });
+                    }
+            }).error(function(errors) {spinner.stop(target);console.log (errors.statustext)});
+
+
+        }
+
+
+        if (pol_pgis) {
+
+            $.ajax({
+                dataType: "json",
+                url: "http://vizz.water-test.appspot.com/water/series?coords="+pol_pgis+"&begin=2000-01-01",
+                    success: function(data) {
+                        console.log(data);
+                        res = [];
+                        $(data.result).each(function(key, data) {
+                                res.push([Date.parse(data.date), data.area]);
+                            }   
+                        )
+
+                        g = new Dygraph(
+                            document.getElementById("series"),
+                            res,
+                                {
+                                    ylabel: '',
+                                    drawXGrid: false,
+                                    drawYGrid: false,
+                                    colors: ["#5F94D9"],
+                                    fillGraph: false,
+                                    drawPoints: false,
+                                    labels: ['Date', 'Proportion'],
+                                    axes: {
+                                        x: {
+                                            valueFormatter: Dygraph.dateString_,
+                                            axisLabelFormatter: Dygraph.dateAxisFormatter,
+                                            ticker: Dygraph.dateTicker
+                                        }
+                                    }
+                                }
+
+                        )
                     }
             }).error(function(errors) {spinner.stop(target);console.log (errors.statustext)});
 
