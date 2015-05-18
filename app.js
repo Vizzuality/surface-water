@@ -88,7 +88,7 @@ function main() {
 
     // Add CartoDB basemaps
     L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-        attribution: '',
+        attribution: '<a href="http://cartodb.com">CartoDB</a> © 2014',
         maxZoom: 18
     }).addTo(map);
 
@@ -193,12 +193,12 @@ function main() {
 
             $.ajax({
                 dataType: "json",
-                url: "http://vizz.water-test.appspot.com/water/series?coords="+pol_pgis+"&begin=2000-01-01",
+                url: "http://vizz.water-test.appspot.com/water/series?coords="+pol_pgis+"&begin=2000-01-01&end=2014-01-01",
                     success: function(data) {
                         console.log(data);
                         res = [];
                         $(data.result).each(function(key, data) {
-                                res.push([Date.parse(data.date), data.area]);
+                                res.push([Date.parse(data.date), data.ma, data.smooth]);
                             }   
                         )
 
@@ -209,10 +209,10 @@ function main() {
                                     ylabel: '',
                                     drawXGrid: false,
                                     drawYGrid: false,
-                                    colors: ["#5F94D9"],
+                                    colors: ["#808080", "#5F94D9"],
                                     fillGraph: false,
                                     drawPoints: false,
-                                    labels: ['Date', 'Proportion'],
+                                    labels: ['Date', 'Proportion', 'area'],
                                     axes: {
                                         x: {
                                             valueFormatter: Dygraph.dateString_,
