@@ -34,6 +34,11 @@ function render(year, coords,layer,style,spinner){
 function main() {
      $('#yearcontrol').hide();
 
+     $('#controls').on('click dblclick mousedown mousewheel', function(e) {
+        console.log('hey');
+        e.stopPropagation();
+     });
+
 
      // set the spinner opts
      var opts = {
@@ -193,7 +198,8 @@ function main() {
 
             $.ajax({
                 dataType: "json",
-                url: "http://vizz.water-test.appspot.com/water/series?coords="+pol_pgis+"&begin=2000-01-01&end=2014-01-01",
+                url: 'data.json',
+                // url: "http://vizz.water-test.appspot.com/water/series?coords="+pol_pgis+"&begin=2000-01-01&end=2014-01-01",
                     success: function(data) {
                         console.log(data);
                         res = [];
@@ -219,7 +225,12 @@ function main() {
                                             axisLabelFormatter: Dygraph.dateAxisFormatter,
                                             ticker: Dygraph.dateTicker
                                         }
-                                    }
+                                    },
+                                    drawXAxis: false,
+                                    height: 80,
+                                    width: 651,
+                                    rightGap: 10,
+                                    interactionModel: {}
                                 }
 
                         )

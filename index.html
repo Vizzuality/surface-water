@@ -18,34 +18,32 @@
     </div>
 
     <div id="map">
-      
-        <div id="series" class="leaflet-top leaflet-right">
-          <br>
-          <br>
-          <h2>Proportion covered by water<h2> 
-        </div>
+        <div id="controls" class="leaflet-bar">
+          <div id="container"> 
+            <div id="series"></div>
+          </div>
 
-
-        <div id="yearcontrol" class="leaflet-bottom leaflet-right leaflet-bar ">
-           <label for=slider>Year</label>
-            <input id="slider" type="range" min="1999" max="2012" value="1999" step="1" list="mark" class="leaflet-control"/>
-            <datalist id="mark">
-              <option>1999</option>
-              <option>2000</option>
-              <option>2001</option>
-              <option>2002</option>
-              <option>2003</option>
-              <option>2004</option>
-              <option>2005</option>
-              <option>2006</option>
-              <option>2007</option>
-              <option>2008</option>
-              <option>2009</option>
-              <option>2010</option>
-              <option>2011</option>
-              <option>2012</option>
-            </datalist>
-            <output for=slider id=currentYear>1999</output>
+          <div id="yearcontrol">
+             <label for=slider>Year</label>
+              <input id="slider" type="range" min="1999" max="2012" value="1999" step="1" list="mark" />
+              <datalist id="mark">
+                <option>1999</option>
+                <option>2000</option>
+                <option>2001</option>
+                <option>2002</option>
+                <option>2003</option>
+                <option>2004</option>
+                <option>2005</option>
+                <option>2006</option>
+                <option>2007</option>
+                <option>2008</option>
+                <option>2009</option>
+                <option>2010</option>
+                <option>2011</option>
+                <option>2012</option>
+              </datalist>
+              <output for=slider id=currentYear>1999</output>
+          </div>
         </div>
 
     </div>
