@@ -34,6 +34,11 @@ function render(year, coords,layer,style,spinner){
 function main() {
      $('#yearcontrol').hide();
 
+     $('#controls').on('click dblclick mousedown mousewheel', function(e) {
+        console.log('hey');
+        e.stopPropagation();
+     });
+
 
      // set the spinner opts
      var opts = {
@@ -164,9 +169,73 @@ function main() {
             drawnItems.clearLayers(); 
             spinner.spin(target)
 
-            render(year, pol_pgis,boundary,waterStyle,spinner)
-            $('#yearcontrol').fadeIn('slow');
+            $.ajax({
+                dataType: "json",
+                url: "http://vizz.water-test.appspot.com/water?coords="+pol_pgis+"&date="+year+"-01-01",
+                    success: function(data) {
+                        console.log(data);
+                        boundary.clearLayers(); 
+                        
 
+
+                        $(data.result.features).each(function(key, data) {
+                        boundary.addData(data);
+                        boundary.setStyle(waterStyle);
+                        $('#yearcontrol').fadeIn('slow');
+                        
+                        //year++;
+                        //year=(year>2011)?1999:year;
+                        spinner.stop(target);
+                        });
+                    }
+            }).error(function(errors) {spinner.stop(target);console.log (errors.statustext)});
+
+
+        }
+
+
+        if (pol_pgis) {
+
+            $.ajax({
+                dataType: "json",
+                url: 'data.json',
+                // url: "http://vizz.water-test.appspot.com/water/series?coords="+pol_pgis+"&begin=2000-01-01&end=2014-01-01",
+                    success: function(data) {
+                        console.log(data);
+                        res = [];
+                        $(data.result).each(function(key, data) {
+                                res.push([Date.parse(data.date), data.ma, data.smooth]);
+                            }   
+                        )
+
+                        g = new Dygraph(
+                            document.getElementById("series"),
+                            res,
+                                {
+                                    ylabel: '',
+                                    drawXGrid: false,
+                                    drawYGrid: false,
+                                    colors: ["#808080", "#5F94D9"],
+                                    fillGraph: false,
+                                    drawPoints: false,
+                                    labels: ['Date', 'Proportion', 'area'],
+                                    axes: {
+                                        x: {
+                                            valueFormatter: Dygraph.dateString_,
+                                            axisLabelFormatter: Dygraph.dateAxisFormatter,
+                                            ticker: Dygraph.dateTicker
+                                        }
+                                    },
+                                    drawXAxis: false,
+                                    height: 80,
+                                    width: 651,
+                                    rightGap: 10,
+                                    interactionModel: {}
+                                }
+
+                        )
+                    }
+            }).error(function(errors) {spinner.stop(target);console.log (errors.statustext)});
 
 
         }
