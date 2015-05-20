@@ -218,7 +218,7 @@ function main() {
                                     colors: ["#808080", "#5F94D9"],
                                     fillGraph: false,
                                     drawPoints: false,
-                                    labels: ['Date', 'Proportion', 'area'],
+                                    labels: ['Date', 'raw', 'smoothed'],
                                     axes: {
                                         x: {
                                             valueFormatter: Dygraph.dateString_,
