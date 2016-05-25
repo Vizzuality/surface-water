@@ -14,14 +14,36 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    > .intro-button { margin-right: 10px; }
-    > .intro-text {
+
+    > .button {
+      margin-right: 10px;
+
+      .icon {
+        width: 16px;
+        height: 16px;
+        vertical-align: middle;
+        > use { fill: $color-6; }
+      }
+    }
+
+    > .text {
       margin: 0;
       padding: 0;
       color: $color-8;
       font-size: $font-size-medium;
       font-family: "PT Sans", sans-serif;
       font-weight: $font-weight-normal;
+    }
+  }
+
+  > .tools {
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    > .button {
+      margin-right: 3px;
     }
   }
 }

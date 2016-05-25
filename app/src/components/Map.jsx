@@ -20,9 +20,31 @@ class Map extends Component {
           this.drawing.enable();
           break;
 
+        case 'editing':
+          this.editing.enable();
+          break;
+
         default:
-          this.drawing.disable();
+          this.props.mode === 'drawing' && this.drawing.disable();
+          this.props.mode === 'editing' && this.editing.disable();
       }
+    }
+
+    if(this.props.action !== nextProps.action) {
+      switch(nextProps.action) {
+        case 'save':
+          this.applyEditing();
+          break;
+
+        case 'cancel':
+          this.undoEditing();
+          break;
+      }
+      this.props.setAction(null);
+    }
+
+    if(this.props.selectedArea && !nextProps.selectedArea) {
+      this.deleteDrawing();
     }
   }
 
@@ -44,7 +66,7 @@ class Map extends Component {
   setMapListeners() {
     this.map.on('dragend', () => this.props.setLatLng(this.map.getCenter()));
     this.map.on('zoomend', () => this.props.setZoom(this.map.getZoom()));
-    this.map.on('draw:created', e => this.saveDrawing(e.layer));
+    this.map.on('draw:created', e => this.saveRectangle(e.layer));
   }
 
   initDrawer() {
@@ -53,11 +75,7 @@ class Map extends Component {
 
     /* If the URL already contains an area, we paint it */
     if(this.props.selectedArea) {
-      const southWest = this.props.selectedArea.slice(0, 2);
-      const northEast = this.props.selectedArea.slice(2, 4);
-
-      new L.Rectangle(new L.LatLngBounds(southWest, northEast))
-        .addTo(this.drawnLayer);
+      this.createRectangle(this.props.selectedArea);
     }
 
     /* We init the Leaflet Draw plugin */
@@ -71,16 +89,75 @@ class Map extends Component {
     this.editing = new L.EditToolbar.Edit(this.map, {featureGroup:this.drawnLayer});
   }
 
-  saveDrawing(geo) {
-    this.drawnLayer.addLayer(geo);
+  /**
+   * Create and add a rectangle to the drawing layer
+   * @param  {[type]} rectangleBounds [southWest.lat, southWest.lng,
+   *   northEast.lat, northEast.lng]
+   */
+  createRectangle(rectangleBounds) {
+    this.rectangleBounds = rectangleBounds;
 
-    const southWest = geo.getBounds().getSouthWest();
-    const northEast = geo.getBounds().getNorthEast();
+    const southWest = rectangleBounds.slice(0, 2);
+    const northEast = rectangleBounds.slice(2, 4);
 
-    const selectedArea = Object.keys(southWest).map(k => southWest[k])
+    new L.Rectangle(new L.LatLngBounds(southWest, northEast))
+      .addTo(this.drawnLayer);
+  }
+
+  /**
+   * Delete the rectangle present in the drawing layer
+   */
+  deleteDrawing() {
+    /* There's only one layer: the rectangle */
+    this.drawnLayer.eachLayer(layer => this.drawnLayer.removeLayer(layer));
+  }
+
+  /**
+   * Return the bounds of the passed rectangle
+   * @param  {L.Rectangle} rectangle
+   * @return {Array}       bounds    [southWest.lat, southWest.lng,
+   *   northEast.lat, northEast.lng]
+   */
+  getRectangleBounds(rectangle) {
+    const southWest = rectangle.getBounds().getSouthWest();
+    const northEast = rectangle.getBounds().getNorthEast();
+
+    return Object.keys(southWest).map(k => southWest[k])
       .concat(Object.keys(northEast).map(k => northEast[k]));
+  }
 
-    this.props.setSelectedArea(selectedArea);
+  /**
+   * Add the passed rectangle to the drawing layer, add its bounds into the
+   * URL and unset the mode
+   * @param  {L.Rectangle} rectangle
+   */
+  saveRectangle(rectangle) {
+    this.rectangleBounds = this.getRectangleBounds(rectangle);
+    this.drawnLayer.addLayer(rectangle);
+    this.props.setSelectedArea(this.rectangleBounds);
+    this.props.setMode(null);
+  }
+
+  /**
+   * Add the bounds of the rectangle present in the drawing layer into the URL
+   * and unset the mode
+   */
+  applyEditing() {
+    /* There's only one layer: the rectangle */
+    let rectangle;
+    this.drawnLayer.eachLayer(l => rectangle = l);
+
+    this.rectangleBounds = this.getRectangleBounds(rectangle);
+    this.props.setSelectedArea(this.rectangleBounds);
+    this.props.setMode(null);
+  }
+
+  /**
+   * Restore the previous rectangle in the drawing layer and unset the mode
+   */
+  undoEditing() {
+    this.deleteDrawing();
+    this.createRectangle(this.rectangleBounds);
     this.props.setMode(null);
   }
 

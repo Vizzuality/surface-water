@@ -2,7 +2,7 @@
 
 import {connect} from 'react-redux';
 import Dashboard from '../components/Dashboard';
-import {setMode} from '../actions/map';
+import {setMode, setAction} from '../actions/map';
 
 const mapStateToProps = (state) => {
   return {
@@ -11,7 +11,8 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    setMode: mode => dispatch(setMode(mode))
+    setMode: mode => dispatch(setMode(mode)),
+    setAction: action => dispatch(setAction(action))
   };
 }
 

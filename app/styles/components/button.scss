@@ -11,6 +11,8 @@
   color: $color-2;
   cursor: pointer;
   background-color: $color-3;
+  transition: color .3s, background-color .3s;
+  &:hover { background-color: $color-12; }
 
   &.-fixed {
     width: 65px;
@@ -21,11 +23,16 @@
   &.-highlighted {
     color: $color-6;
     background-color: $color-2;
+    &:hover { background-color: $color-11; }
   }
 
   &.-white {
     color: $color-3;
     background-color: $color-6;
+    &:hover {
+      color: $color-6;
+      background-color: $color-3;
+    }
   }
 
   &.-uppercase {

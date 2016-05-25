@@ -19,6 +19,7 @@ class App extends Component {
         />
         <Dashboard
           selectedArea={this.props.area}
+          setSelectedArea={this.props.setSelectedArea}
         />
         <Footer/>
       </div>
