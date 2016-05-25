@@ -1,7 +1,7 @@
 'use strict';
 
 import {connect} from 'react-redux';
-import App from '../components/App';
+import Footer from '../components/Footer';
 
 const mapStateToProps = (state) => {
   return {};
@@ -10,4 +10,4 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(Footer);

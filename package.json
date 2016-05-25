@@ -30,6 +30,8 @@
     "koa": "^1.2.0",
     "koa-static": "^2.0.0",
     "koa-webpack-dev-middleware": "^1.2.1",
+    "leaflet": "^0.7.7",
+    "leaflet-draw": "^0.3.0",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
     "react-redux": "^4.4.5",
@@ -40,7 +42,9 @@
     "webpack": "^1.13.0"
   },
   "devDependencies": {
+    "babel-preset-stage-0": "^6.5.0",
     "css-loader": "^0.23.1",
+    "image-webpack-loader": "^1.8.0",
     "node-sass": "^3.7.0",
     "sass-loader": "^3.2.0",
     "webpack": "^1.13.1"

@@ -1,0 +1,36 @@
+@import "../settings";
+
+.button {
+  display: inline-block;
+  padding: 0 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: $font-size-x-small;
+  font-family: "PT Sans", sans-serif;
+  font-weight: $font-weight-normal;
+  color: $color-2;
+  cursor: pointer;
+  background-color: $color-3;
+
+  &.-fixed {
+    width: 65px;
+    padding: 0;
+    text-align: center;
+  }
+
+  &.-highlighted {
+    color: $color-6;
+    background-color: $color-2;
+  }
+
+  &.-white {
+    color: $color-3;
+    background-color: $color-6;
+  }
+
+  &.-uppercase {
+    font-family: "Montserrat", sans-serif;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+  }
+}

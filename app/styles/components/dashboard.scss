@@ -1,0 +1,27 @@
+@import "../settings";
+
+.dashboard {
+  position: absolute;
+  bottom: 36px;
+  left: 0;
+  height: 80px;
+  width: 100%;
+  padding: 0 60px;
+  background-color: $color-4;
+
+  > .intro {
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    > .intro-button { margin-right: 10px; }
+    > .intro-text {
+      margin: 0;
+      padding: 0;
+      color: $color-8;
+      font-size: $font-size-medium;
+      font-family: "PT Sans", sans-serif;
+      font-weight: $font-weight-normal;
+    }
+  }
+}

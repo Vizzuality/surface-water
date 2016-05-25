@@ -1,0 +1,38 @@
+@import "../settings";
+
+.footer {
+  height: 36px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: $color-3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  > .menu {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0 20px;
+    height: 100%;
+
+    > .menu-item {
+      height: 100%;
+      font-family: "PT Sans", sans-serif;
+      font-size: $font-size-x-small;
+      font-weight: $font-weight-normal;
+      line-height: 36px;
+      color: $color-9;
+      padding: 0 40px;
+      border-left: 1px solid #343b3e;
+      &:first-of-type { border-left: none; }
+      &.menu-item-highlight { color: $color-2; }
+    }
+  }
+
+  > .share {
+
+  }
+}

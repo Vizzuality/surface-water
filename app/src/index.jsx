@@ -5,10 +5,14 @@ import {render} from 'react-dom';
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
-import {Router, Route, IndexRoute, browserHistory} from 'react-router';
-import {syncHistoryWithStore, routerReducer} from 'react-router-redux';
+import {Router, Route, IndexRoute, Redirect, hashHistory} from 'react-router';
+import {syncHistoryWithStore, routerReducer, routerMiddleware} from 'react-router-redux';
+import * as reducers from './reducers';
 import AppContainer from './containers/app';
 import '../styles/index.scss';
+import '../../node_modules/leaflet/dist/leaflet.css';
+import '../../node_modules/leaflet-draw/dist/leaflet.draw.css';
+import Routes from './routes';
 
 /**
  * Reducers
@@ -16,6 +20,7 @@ import '../styles/index.scss';
  * @type {Object}
  */
 const reducer = combineReducers({
+  ...reducers,
   routing: routerReducer
 });
 
@@ -24,9 +29,11 @@ const reducer = combineReducers({
  * @info(http://redux.js.org/docs/basics/Store.html)
  * @type {Object}
  */
+const middlewareRouter = routerMiddleware(hashHistory)
 const store = createStore(
   reducer,
-  applyMiddleware(thunk)
+  applyMiddleware(thunk),
+  applyMiddleware(middlewareRouter)
 );
 
 /**
@@ -34,13 +41,11 @@ const store = createStore(
  * @info(https://github.com/reactjs/react-router/tree/master/docs)
  * @type {Object}
  */
-const history = syncHistoryWithStore(browserHistory, store);
+const history = syncHistoryWithStore(hashHistory, store);
 
 render(
   <Provider store={store}>
-    <Router history={history}>
-      <Route path="/" component={AppContainer} />
-    </Router>
+    <Routes history={history}/>
   </Provider>,
   document.getElementById('app')
 );
