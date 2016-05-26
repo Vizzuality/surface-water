@@ -1,0 +1,32 @@
+@import "../settings";
+
+.map-popup {
+  top: 10px;
+  bottom: auto !important;
+  display: flex;
+  flex-direction: column-reverse;
+
+  > :global(.leaflet-popup-tip-container) {
+    height: 6px;
+    width: 15px;
+
+    > :global(.leaflet-popup-tip) {
+      margin: 2px 0 0 2px;
+      width: 11px;
+      height: 11px;
+      box-shadow: none;
+      background-color: $color-3;
+    }
+  }
+
+  > :global(.leaflet-popup-content-wrapper) {
+    text-align: center;
+    font-family: "PT Sans", sans-serif;
+    font-weight: $font-weight-normal;
+    font-size: $font-size-x-small;
+    color: $color-13;
+    border-radius: 0;
+    background-color: $color-3;
+    box-shadow: 0 0 15px 0 rgba(13, 13, 13, .1);
+  }
+}

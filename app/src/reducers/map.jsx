@@ -5,8 +5,9 @@ const initialState = {
   mode: null,
   zoom: 2,
   latLng: [40.432416, -3.701031],
-  year: null /* TODO: see with the api */,
-  action: null
+  year: 1999,
+  action: null,
+  yearsRange: [1999, 2012]
 };
 
 export default function(state = initialState, action) {

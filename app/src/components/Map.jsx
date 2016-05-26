@@ -5,6 +5,14 @@ import L from 'leaflet';
 import leafletDraw from 'leaflet-draw';
 
 import styles from '../../styles/components/map.scss';
+import stylesPopup from '../../styles/components/map-popup.scss';
+
+const rectangleStyles = {
+  color: '#f1d500',
+  weight: 2,
+  opacity: 1,
+  fill: false
+};
 
 class Map extends Component {
 
@@ -22,6 +30,7 @@ class Map extends Component {
 
         case 'editing':
           this.editing.enable();
+          this.hidePopup();
           break;
 
         default:
@@ -60,6 +69,14 @@ class Map extends Component {
       minZoom: 2
     }).addTo(this.map);
 
+    this.popup = L.popup({
+      closeButton: false,
+      closeOnClick: false,
+      className: stylesPopup['map-popup'],
+      minWidth: 300,
+      maxWidth: 300
+    });
+
     this.setMapListeners();
   }
 
@@ -85,7 +102,9 @@ class Map extends Component {
       }
     });
 
-    this.drawing = new L.Draw.Rectangle(this.map);
+    this.drawing = new L.Draw.Rectangle(this.map, {
+      shapeOptions: rectangleStyles
+    });
     this.editing = new L.EditToolbar.Edit(this.map, {featureGroup:this.drawnLayer});
   }
 
@@ -100,16 +119,20 @@ class Map extends Component {
     const southWest = rectangleBounds.slice(0, 2);
     const northEast = rectangleBounds.slice(2, 4);
 
-    new L.Rectangle(new L.LatLngBounds(southWest, northEast))
+    new L.Rectangle(new L.LatLngBounds(southWest, northEast), rectangleStyles)
       .addTo(this.drawnLayer);
+
+    this.showPopup();
   }
 
   /**
-   * Delete the rectangle present in the drawing layer
+   * Delete the rectangle present in the drawing layer and remove the popup from
+   * the map
    */
   deleteDrawing() {
     /* There's only one layer: the rectangle */
     this.drawnLayer.eachLayer(layer => this.drawnLayer.removeLayer(layer));
+    this.hidePopup();
   }
 
   /**
@@ -136,6 +159,7 @@ class Map extends Component {
     this.drawnLayer.addLayer(rectangle);
     this.props.setSelectedArea(this.rectangleBounds);
     this.props.setMode(null);
+    this.showPopup();
   }
 
   /**
@@ -148,6 +172,7 @@ class Map extends Component {
     this.drawnLayer.eachLayer(l => rectangle = l);
 
     this.rectangleBounds = this.getRectangleBounds(rectangle);
+    this.showPopup();
     this.props.setSelectedArea(this.rectangleBounds);
     this.props.setMode(null);
   }
@@ -159,6 +184,23 @@ class Map extends Component {
     this.deleteDrawing();
     this.createRectangle(this.rectangleBounds);
     this.props.setMode(null);
+  }
+
+  /**
+   * Add the popup at the bottom of the rectangle on the map
+   */
+  showPopup() {
+    this.popup
+      .setLatLng([ this.rectangleBounds[0], (this.rectangleBounds[1] + this.rectangleBounds[3]) / 2 ])
+      .setContent('Rectangle')
+      .openOn(this.map);
+  }
+
+  /**
+   * Remove the popup from the map
+   */
+  hidePopup() {
+    this.map.removeLayer(this.popup);
   }
 
   render() {
