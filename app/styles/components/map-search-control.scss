@@ -1,0 +1,30 @@
+@import "../settings";
+
+.control {
+  position: absolute;
+  top: 130px;
+  right: 70px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  cursor: pointer;
+  background-color: $color-3;
+  transition: background-color .3s;
+
+  > svg {
+    width: 16px;
+    height: 16px;
+    > use {
+      fill: $color-2;
+      transition: fill .3s;
+    }
+  }
+
+  &:hover {
+    background-color: $color-15;
+    > svg > use { fill: $color-14; }
+  }
+}

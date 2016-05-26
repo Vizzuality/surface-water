@@ -2,13 +2,15 @@
 
 import {connect} from 'react-redux';
 import Map from '../components/Map';
-import {setMode, setAction, fetchGeo} from '../actions/map';
+import {setMode, setAction, fetchGeo, deleteSearchBoundingBox} from '../actions/map';
 
 const mapStateToProps = (state, stateRouter) => {
   return {
     mode: state.map.mode,
     action: state.map.action,
-    data: state.map.geoData
+    data: state.map.geoData,
+    mapBoundingBox: state.map.search.boundingBox &&
+      state.map.search.boundingBox.map(v => +v)
   };
 };
 
@@ -18,7 +20,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setMode: mode => dispatch(setMode(mode)),
     setAction: action => dispatch(setAction(action)),
-    fetchData: (rectangleBounds, year) => dispatch(fetchGeo(rectangleBounds,year))
+    fetchData: (rectangleBounds, year) => dispatch(fetchGeo(rectangleBounds,year)),
+    resetBoundingBox: () => dispatch(deleteSearchBoundingBox())
   };
 }
 

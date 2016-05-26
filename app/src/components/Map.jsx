@@ -4,6 +4,8 @@ import React, {Component} from 'react';
 import L from 'leaflet';
 import leafletDraw from 'leaflet-draw';
 
+import { MapSearchControl } from '../containers';
+
 import styles from '../../styles/components/map.scss';
 import stylesPopup from '../../styles/components/map-popup.scss';
 
@@ -72,13 +74,24 @@ class Map extends Component {
     if(this.props.data !== nextProps.data) {
       this.renderWaterGeos(nextProps.data);
     }
+
+    if(!this.props.mapBoundingBox && nextProps.mapBoundingBox) {
+      this.map.fitBounds([
+        [ nextProps.mapBoundingBox[0], nextProps.mapBoundingBox[2] ],
+        [ nextProps.mapBoundingBox[1], nextProps.mapBoundingBox[3] ]
+      ], { animate: true });
+      this.props.resetBoundingBox();
+    }
   }
 
   initMap() {
     this.map = L.map(this.refs.map, {
       zoom: this.props.zoom,
-      center: this.props.latLng
+      center: this.props.latLng,
+      zoomControl: false
     });
+
+    L.control.zoom({ position: 'topright' }).addTo(this.map);
 
     L.tileLayer(`http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}${window.devicePixelRatio >= 2 ? '@2x' : ''}.png`, {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://cartodb.com/attributions">CartoDB</a>',
@@ -260,7 +273,9 @@ class Map extends Component {
   }
 
   render() {
-    return <div className={styles.map} ref="map"></div>;
+    return <div className={styles.map} ref="map">
+      <MapSearchControl/>
+    </div>;
   }
 
 }

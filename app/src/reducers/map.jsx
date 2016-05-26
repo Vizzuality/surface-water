@@ -1,4 +1,4 @@
-import {SELECTED_AREA, MODE, ZOOM, LATLNG, YEAR, ACTION, LOADING, ERROR, GEO_DATA} from '../constants';
+import {SELECTED_AREA, MODE, ZOOM, LATLNG, YEAR, ACTION, LOADING, ERROR, GEO_DATA, SEARCH} from '../constants';
 
 const initialState = {
   selectedArea: null,
@@ -10,7 +10,12 @@ const initialState = {
   yearsRange: [1999, 2012],
   loading: false,
   error: null,
-  geoData: null
+  geoData: null,
+  search: {
+    active: false,
+    boundingBox: null,
+    error: null
+  }
 };
 
 export default function(state = initialState, action) {
@@ -26,6 +31,12 @@ export default function(state = initialState, action) {
           return Object.assign({}, state, { error: action.payload });
         case GEO_DATA:
           return Object.assign({}, state, { geoData: action.payload });
+        case SEARCH:
+          const search = Object.assign({}, state.search);
+          for(let k in action.payload) {
+            search[k] = action.payload[k];
+          }
+          return Object.assign({}, state, { search });
         default:
             return state;
     }

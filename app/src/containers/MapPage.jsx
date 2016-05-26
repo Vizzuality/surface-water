@@ -23,7 +23,8 @@ const mapStateToProps = (state, ownProps) => {
     lng: +ownProps.params.lng,
     year: +ownProps.params.year,
     loading: state.map.loading,
-    error: state.map.error
+    error: state.map.error,
+    searchModal: state.map.search.active
   };
 
   if(ownProps.location.query && Object.keys(ownProps.location.query).length) {

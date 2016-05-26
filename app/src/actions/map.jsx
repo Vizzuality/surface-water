@@ -1,4 +1,4 @@
-import {SELECTED_AREA, MODE, ZOOM, LATLNG, YEAR, ACTION, LOADING, ERROR, GEO_DATA} from '../constants';
+import {SELECTED_AREA, MODE, ZOOM, LATLNG, YEAR, ACTION, LOADING, ERROR, GEO_DATA, SEARCH} from '../constants';
 import 'whatwg-fetch';
 
 
@@ -103,3 +103,60 @@ export function setError(text) {
     });
   };
 };
+
+export function toggleSearch(active) {
+  return dispatch => {
+    dispatch({
+      type: SEARCH,
+      payload: { active }
+    });
+  };
+};
+
+export function toggleSearch(active) {
+  return dispatch => {
+    dispatch({
+      type: SEARCH,
+      payload: { active }
+    });
+  };
+};
+
+export function search(location) {
+  return dispatch => {
+    fetch(`http://nominatim.openstreetmap.org/search/${location}?format=json&limit=1`)
+      .then(response => response.json())
+      .then(response => {
+        if(response.length && response[0].boundingbox &&
+          response[0].boundingbox.length) {
+          dispatch({
+            type: SEARCH,
+            payload: {
+              active: false,
+              boundingBox: response[0].boundingbox
+            }
+          });
+        } else {
+          dispatch({
+            type: SEARCH,
+            payload: { error: 'The location couln\'t be determined. Please try another.' }
+          });
+        }
+      })
+      .catch(response => {
+        dispatch({
+          type: SEARCH,
+          payload: { error: 'An error occured while searching. Please try again.' }
+        });
+      });
+  };
+};
+
+export function deleteSearchBoundingBox() {
+  return dispatch => {
+    dispatch({
+      type: SEARCH,
+      payload: { boundingBox: null }
+    });
+  };
+}

@@ -1,0 +1,24 @@
+@import "../settings";
+
+.message {
+  display: flex;
+  align-items: center;
+  padding: 13px 30px;
+  font-family: "PT Sans", sans-serif;
+  font-size: $font-size-small;
+  font-weight: $font-weight-normal;
+  color: $color-6;
+  background-color: $color-18;
+
+  > .icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 20px;
+    > use { fill: $color-6; }
+  }
+
+  &.-error {
+    color: $color-3;
+    background-color: $color-1;
+  }
+}
