@@ -2,12 +2,13 @@
 
 import {connect} from 'react-redux';
 import Map from '../components/Map';
-import {setMode, setAction} from '../actions/map';
+import {setMode, setAction, fetchGeo} from '../actions/map';
 
 const mapStateToProps = (state, stateRouter) => {
   return {
     mode: state.map.mode,
-    action: state.map.action
+    action: state.map.action,
+    data: state.map.geoData
   };
 };
 
@@ -16,7 +17,8 @@ const mapStateToProps = (state, stateRouter) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setMode: mode => dispatch(setMode(mode)),
-    setAction: action => dispatch(setAction(action))
+    setAction: action => dispatch(setAction(action)),
+    fetchData: (rectangleBounds, year) => dispatch(fetchGeo(rectangleBounds,year))
   };
 }
 

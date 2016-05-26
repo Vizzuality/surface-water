@@ -39,7 +39,8 @@
     "react-router-redux": "^4.0.4",
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0",
-    "webpack": "^1.13.0"
+    "webpack": "^1.13.0",
+    "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
     "babel-preset-stage-0": "^6.5.0",

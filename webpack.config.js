@@ -9,6 +9,7 @@ const config = {
   context: path.join(__dirname, 'app'),
 
   entry: [
+    'whatwg-fetch',
     './src/index.jsx'
   ],
 

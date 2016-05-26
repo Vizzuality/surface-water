@@ -29,4 +29,15 @@
     background-color: $color-3;
     box-shadow: 0 0 15px 0 rgba(13, 13, 13, .1);
   }
+
+  &.-error {
+    :global(.leaflet-popup-tip) {
+      background-color: $color-1;
+    }
+
+    :global(.leaflet-popup-content-wrapper) {
+      color: $color-3;
+      background-color: $color-1;
+    }
+  }
 }

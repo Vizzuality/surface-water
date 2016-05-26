@@ -14,6 +14,17 @@ const rectangleStyles = {
   fill: false
 };
 
+const waterStyles = {
+  color: '#004d6b',
+  weight: 1,
+  opacity: 1,
+  fillColor: '#009fdd',
+  fillOpacity: 1,
+  clickable: false
+};
+
+const noDataError = 'There\'s no data for the selected area.';
+
 class Map extends Component {
 
   componentDidMount() {
@@ -31,6 +42,7 @@ class Map extends Component {
         case 'editing':
           this.editing.enable();
           this.hidePopup();
+          this.deleteWaterGeos();
           break;
 
         default:
@@ -54,6 +66,11 @@ class Map extends Component {
 
     if(this.props.selectedArea && !nextProps.selectedArea) {
       this.deleteDrawing();
+      this.deleteWaterGeos();
+    }
+
+    if(this.props.data !== nextProps.data) {
+      this.renderWaterGeos(nextProps.data);
     }
   }
 
@@ -76,6 +93,8 @@ class Map extends Component {
       minWidth: 300,
       maxWidth: 300
     });
+
+    this.waterLayer =  L.geoJson().addTo(this.map);
 
     this.setMapListeners();
   }
@@ -109,7 +128,7 @@ class Map extends Component {
   }
 
   /**
-   * Create and add a rectangle to the drawing layer
+   * Create and add a rectangle to the drawing layer and fetch the data
    * @param  {[type]} rectangleBounds [southWest.lat, southWest.lng,
    *   northEast.lat, northEast.lng]
    */
@@ -122,7 +141,7 @@ class Map extends Component {
     new L.Rectangle(new L.LatLngBounds(southWest, northEast), rectangleStyles)
       .addTo(this.drawnLayer);
 
-    this.showPopup();
+    this.props.fetchData(this.rectangleBounds, this.props.year);
   }
 
   /**
@@ -130,8 +149,7 @@ class Map extends Component {
    * the map
    */
   deleteDrawing() {
-    /* There's only one layer: the rectangle */
-    this.drawnLayer.eachLayer(layer => this.drawnLayer.removeLayer(layer));
+    this.drawnLayer.clearLayers();
     this.hidePopup();
   }
 
@@ -151,7 +169,7 @@ class Map extends Component {
 
   /**
    * Add the passed rectangle to the drawing layer, add its bounds into the
-   * URL and unset the mode
+   * URL, unset the mode and fetch the data
    * @param  {L.Rectangle} rectangle
    */
   saveRectangle(rectangle) {
@@ -159,12 +177,12 @@ class Map extends Component {
     this.drawnLayer.addLayer(rectangle);
     this.props.setSelectedArea(this.rectangleBounds);
     this.props.setMode(null);
-    this.showPopup();
+    this.props.fetchData(this.rectangleBounds, this.props.year);
   }
 
   /**
-   * Add the bounds of the rectangle present in the drawing layer into the URL
-   * and unset the mode
+   * Add the bounds of the rectangle present in the drawing layer into the URL,
+   * unset the mode and fetch the data
    */
   applyEditing() {
     /* There's only one layer: the rectangle */
@@ -172,9 +190,10 @@ class Map extends Component {
     this.drawnLayer.eachLayer(l => rectangle = l);
 
     this.rectangleBounds = this.getRectangleBounds(rectangle);
-    this.showPopup();
     this.props.setSelectedArea(this.rectangleBounds);
     this.props.setMode(null);
+
+    this.props.fetchData(this.rectangleBounds, this.props.year);
   }
 
   /**
@@ -188,12 +207,24 @@ class Map extends Component {
 
   /**
    * Add the popup at the bottom of the rectangle on the map
+   * @param  {String} content   html inside the popup
+   * @param  {String} className optional class name to add to the popup
    */
-  showPopup() {
+  showPopup(content, className) {
     this.popup
       .setLatLng([ this.rectangleBounds[0], (this.rectangleBounds[1] + this.rectangleBounds[3]) / 2 ])
-      .setContent('Rectangle')
+      .setContent(content)
       .openOn(this.map);
+
+    /* We update the additional class of the popup */
+    if(this.popupAdditionalClass) {
+      this.popup._container.classList.remove(this.popupAdditionalClass);
+      this.popupAdditionalClass = null;
+    }
+    if(className) {
+      this.popupAdditionalClass = className;
+      this.popup._container.classList.add(className);
+    }
   }
 
   /**
@@ -201,6 +232,31 @@ class Map extends Component {
    */
   hidePopup() {
     this.map.removeLayer(this.popup);
+  }
+
+  /**
+   * Remove the previous water geometries and render the new
+   * @param  {Array} waterGeos geometries
+   */
+  renderWaterGeos(waterGeos) {
+    waterGeos.forEach(geo => this.waterLayer.addData(geo));
+    this.waterLayer.setStyle(waterStyles);
+
+    /* TODO: there could be nothing to display for this year, but data for
+     * another */
+    // if(waterGeos.length) {
+    //   waterGeos.forEach(geo => this.waterLayer.addData(geo));
+    //   this.showPopup('TODO: show data');
+    // } else {
+    //   this.showPopup(noDataError, stylesPopup['-error']);
+    // }
+  }
+
+  /**
+   * Remove the water geometries of the map
+   */
+  deleteWaterGeos() {
+    this.waterLayer.clearLayers();
   }
 
   render() {

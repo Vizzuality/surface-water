@@ -21,7 +21,9 @@ const mapStateToProps = (state, ownProps) => {
     zoom: +ownProps.params.zoom,
     lat: +ownProps.params.lat,
     lng: +ownProps.params.lng,
-    year: +ownProps.params.year
+    year: +ownProps.params.year,
+    loading: state.map.loading,
+    error: state.map.error
   };
 
   if(ownProps.location.query && Object.keys(ownProps.location.query).length) {
