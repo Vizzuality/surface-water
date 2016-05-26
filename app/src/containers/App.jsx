@@ -6,7 +6,8 @@ import App from '../components/App';
 const mapStateToProps = (state) => {
   return {
     zoom: state.map.zoom,
-    latLng: state.map.latLng
+    latLng: state.map.latLng,
+    year: state.map.year
   };
 };
 const mapDispatchToProps = (dispatch) => {

@@ -8,17 +8,16 @@ class Routes extends Component{
   render(){
     return <Router history={this.props.history}>
       <Route path="/" component={AppContainer}>
-        <IndexRedirect to={`map/${this.props.latLng.join('/')}/${this.props.zoom}`}/>
-        <Route path="map/:lat/:lng/:zoom" component={MapPageContainer} />
+        <IndexRedirect to={`map/${this.props.latLng.join('/')}/${this.props.zoom}/${this.props.year}`}/>
+        <Route path="map/:lat/:lng/:zoom/:year" component={MapPageContainer} />
       </Route>
-
-
-    </Router>
+    </Router>;
   }
 }
 let mapStateToProps = (state) => ({
   zoom: state.map.zoom,
-  latLng: state.map.latLng
+  latLng: state.map.latLng,
+  year: state.map.year
 });
 
 let mapDispatchToProps = (dispatch) => ({});

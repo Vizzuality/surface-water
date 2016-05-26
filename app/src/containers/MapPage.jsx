@@ -8,10 +8,9 @@ import MapPage from '../components/MapPage';
 const setUrl = (params, nextParams) => {
   params = Object.assign({}, params, nextParams);
 
-  let url = `${params.lat}/${params.lng}/${params.zoom}`;
+  let url = `${params.lat}/${params.lng}/${params.zoom}/${params.year}`;
   if(params.area) {
     url += `?area=${params.area}`;
-    if(params.year) url += `&year=${params.year}`;
   }
 
   return push(`/map/${url}`);
@@ -19,16 +18,16 @@ const setUrl = (params, nextParams) => {
 
 const mapStateToProps = (state, ownProps) => {
   let props = {
-    zoom: ownProps.params.zoom,
-    lat: ownProps.params.lat,
-    lng: ownProps.params.lng
+    zoom: +ownProps.params.zoom,
+    lat: +ownProps.params.lat,
+    lng: +ownProps.params.lng,
+    year: +ownProps.params.year
   };
 
   if(ownProps.location.query && Object.keys(ownProps.location.query).length) {
     return Object.assign(props, {
       area: ownProps.location.query.area.split(',').map(n => +n),
-      year: ownProps.location.query.year}
-    );
+    });
   }
 
   return props;
