@@ -7,6 +7,10 @@ import styles from '../../styles/components/search-modal.scss';
 
 class SearchModal extends Component {
 
+  componentDidMount() {
+    this.refs.input.focus();
+  }
+
   onKeyPress(e) {
     if(e.charCode === 13) {
       this.search(e.target.value);
