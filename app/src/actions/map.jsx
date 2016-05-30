@@ -80,6 +80,10 @@ export function fetchData(routerParams, rectangleBounds, year) {
       payload: true
     });
 
+    /* By removing the data first, we make it easy for the components to know
+     * when new data arrive */
+    dispatch(emptyData());
+
     if(!rectangleBounds) rectangleBounds = state.selectedArea;
     const rectangleLatLng = [
       [ rectangleBounds[1], rectangleBounds[0] ],
@@ -145,6 +149,13 @@ export function fetchData(routerParams, rectangleBounds, year) {
           payload: false
         });
       });
+  };
+};
+
+export function emptyData() {
+  return {
+    type: DATA,
+    payload: { yearlyPercentage: null, geometries: null }
   };
 };
 

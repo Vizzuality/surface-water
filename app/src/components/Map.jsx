@@ -25,7 +25,7 @@ const waterStyles = {
   clickable: false
 };
 
-const noDataError = 'There\'s no data for the selected area.';
+const noDataError = 'It seems there\'s no data for the selected area.';
 
 class Map extends Component {
 
@@ -71,7 +71,9 @@ class Map extends Component {
       this.deleteWaterGeos();
     }
 
-    if(this.props.data !== nextProps.data) {
+    if((!this.props.data || !this.props.data.geos ||
+      !this.props.data.yearlyPercentage) && nextProps.data.geos &&
+      nextProps.data.yearlyPercentage) {
       this.renderWaterGeos(nextProps.data);
     }
 
@@ -255,20 +257,26 @@ class Map extends Component {
 
   /**
    * Remove the previous water geometries and render the new
-   * @param  {Array} waterGeos geometries
+   * @param  {Array} data geometries + yearly percentage
    */
-  renderWaterGeos(waterGeos) {
-    waterGeos.forEach(geo => this.waterLayer.addData(geo));
+  renderWaterGeos(data) {
+    data.geos.forEach(geo => this.waterLayer.addData(geo));
     this.waterLayer.setStyle(waterStyles);
 
-    /* TODO: there could be nothing to display for this year, but data for
-     * another */
-    // if(waterGeos.length) {
-    //   waterGeos.forEach(geo => this.waterLayer.addData(geo));
-    //   this.showPopup('TODO: show data');
-    // } else {
-    //   this.showPopup(noDataError, stylesPopup['-error']);
-    // }
+    /* We check whether the percentage is always 0 */
+    let noData = true;
+    for(let i = 0, j = data.yearlyPercentage.length; i < j; i++) {
+      if(data.yearlyPercentage[i].percentage > 0) {
+        noData = false;
+        break;
+      }
+    }
+
+    if(noData) {
+      this.showPopup(noDataError, stylesPopup['-error']);
+    } else {
+      this.showPopup('TODO: show data');
+    }
   }
 
   /**

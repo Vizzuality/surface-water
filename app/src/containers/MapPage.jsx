@@ -2,7 +2,7 @@
 
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { updateURL, fetchData } from '../actions/map';
+import { updateURL, fetchData, emptyData } from '../actions/map';
 import MapPage from '../components/MapPage';
 
 const mapStateToProps = (state, { params, location }) => {
@@ -31,7 +31,7 @@ const mapDispatchToProps = (dispatch, { params, location }) => {
     setSelectedArea: area => dispatch(updateURL(params, { area })),
     setZoom: zoom => dispatch(updateURL(params, { zoom })),
     setLatLng: latLng => dispatch(updateURL(params, { lat: latLng.lat, lng: latLng.lng })),
-    fetchData: (rectangleBounds, year) => dispatch(fetchData(params, rectangleBounds, year)),
+    fetchData: (rectangleBounds, year) => dispatch(fetchData(params, rectangleBounds, year))
   };
 };
 

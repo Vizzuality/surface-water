@@ -8,7 +8,10 @@ const mapStateToProps = state => {
   return {
     mode: state.map.mode,
     action: state.map.action,
-    data: state.map.data.geometries,
+    data: {
+      geos: state.map.data.geometries,
+      yearlyPercentage: state.map.data.yearlyPercentage
+    },
     mapBoundingBox: state.map.search.boundingBox &&
       state.map.search.boundingBox.map(v => +v)
   };
