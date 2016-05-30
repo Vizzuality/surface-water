@@ -277,6 +277,10 @@ class Map extends Component {
     } else {
       this.showPopup('TODO: show data');
     }
+
+    /* NOTE: we move the rectangle on top of the geometries
+     * this.drawnLayer only contains one layer (the rectangle )*/
+    this.drawnLayer.eachLayer(l => l.bringToFront());
   }
 
   /**
