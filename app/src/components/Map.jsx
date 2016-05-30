@@ -116,7 +116,11 @@ class Map extends Component {
 
   setMapListeners() {
     this.map.on('dragend', () => this.props.setLatLng(this.map.getCenter()));
-    this.map.on('zoomend', () => this.props.setZoom(this.map.getZoom()));
+    this.map.on('zoomend', () => {
+      this.props.setZoom(this.map.getZoom());
+      /* Zooming can move the center of the map */
+      this.props.setLatLng(this.map.getCenter());
+    });
     this.map.on('draw:created', e => this.saveRectangle(e.layer));
   }
 
