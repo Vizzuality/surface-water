@@ -2,34 +2,23 @@
 
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import { updateURL, fetchData } from '../actions/map';
 import MapPage from '../components/MapPage';
 
-/* Used to update the URL */
-const setUrl = (params, nextParams) => {
-  params = Object.assign({}, params, nextParams);
-
-  let url = `${params.lat}/${params.lng}/${params.zoom}/${params.year}`;
-  if(params.area) {
-    url += `?area=${params.area}`;
-  }
-
-  return push(`/map/${url}`);
-};
-
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state, { params, location }) => {
   let props = {
-    zoom: +ownProps.params.zoom,
-    lat: +ownProps.params.lat,
-    lng: +ownProps.params.lng,
-    year: +ownProps.params.year,
+    zoom: +params.zoom,
+    lat: +params.lat,
+    lng: +params.lng,
     loading: state.map.loading,
     error: state.map.error,
     searchModal: state.map.search.active
   };
 
-  if(ownProps.location.query && Object.keys(ownProps.location.query).length) {
+  if(location.query && Object.keys(location.query).length) {
     return Object.assign(props, {
-      area: ownProps.location.query.area.split(',').map(n => +n),
+      area: location.query.area.split(',').map(n => +n),
+      year: +location.query.year
     });
   }
 
@@ -39,9 +28,10 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, { params, location }) => {
   params = Object.assign({}, params, location.query);
   return {
-    setSelectedArea: area => dispatch(setUrl(params, { area })),
-    setZoom: zoom => dispatch(setUrl(params, { zoom })),
-    setLatLng: latLng => dispatch(setUrl(params, { lat: latLng.lat, lng: latLng.lng }))
+    setSelectedArea: area => dispatch(updateURL(params, { area })),
+    setZoom: zoom => dispatch(updateURL(params, { zoom })),
+    setLatLng: latLng => dispatch(updateURL(params, { lat: latLng.lat, lng: latLng.lng })),
+    fetchData: (rectangleBounds, year) => dispatch(fetchData(params, rectangleBounds, year)),
   };
 };
 

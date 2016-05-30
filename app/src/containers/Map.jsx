@@ -2,13 +2,13 @@
 
 import {connect} from 'react-redux';
 import Map from '../components/Map';
-import {setMode, setAction, fetchGeo, deleteSearchBoundingBox} from '../actions/map';
+import {setMode, setAction, deleteSearchBoundingBox} from '../actions/map';
 
-const mapStateToProps = (state, stateRouter) => {
+const mapStateToProps = state => {
   return {
     mode: state.map.mode,
     action: state.map.action,
-    data: state.map.geoData,
+    data: state.map.data.geometries,
     mapBoundingBox: state.map.search.boundingBox &&
       state.map.search.boundingBox.map(v => +v)
   };
@@ -16,11 +16,10 @@ const mapStateToProps = (state, stateRouter) => {
 
 /* The setters must only change attributes stored in the store and not the one
  * stored in the router */
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     setMode: mode => dispatch(setMode(mode)),
     setAction: action => dispatch(setAction(action)),
-    fetchData: (rectangleBounds, year) => dispatch(fetchGeo(rectangleBounds,year)),
     resetBoundingBox: () => dispatch(deleteSearchBoundingBox())
   };
 }

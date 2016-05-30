@@ -8,19 +8,19 @@ class Routes extends Component{
   render(){
     return <Router history={this.props.history}>
       <Route path="/" component={AppContainer}>
-        <IndexRedirect to={`map/${this.props.latLng.join('/')}/${this.props.zoom}/${this.props.year}`}/>
-        <Route path="map/:lat/:lng/:zoom/:year" component={MapPageContainer} />
+        <IndexRedirect to={`map/${this.props.latLng.join('/')}/${this.props.zoom}`}/>
+        <Route path="map/:lat/:lng/:zoom" component={MapPageContainer} />
       </Route>
     </Router>;
   }
 }
-let mapStateToProps = (state) => ({
+
+let mapStateToProps = state => ({
   zoom: state.map.zoom,
-  latLng: state.map.latLng,
-  year: state.map.year
+  latLng: state.map.latLng
 });
 
-let mapDispatchToProps = (dispatch) => ({});
+let mapDispatchToProps = dispatch => ({});
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Routes);

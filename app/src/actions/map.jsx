@@ -1,6 +1,20 @@
-import {SELECTED_AREA, MODE, ZOOM, LATLNG, YEAR, ACTION, LOADING, ERROR, GEO_DATA, SEARCH} from '../constants';
+import {SELECTED_AREA, MODE, ZOOM, LATLNG, YEAR, ACTION, LOADING, ERROR, DATA, SEARCH} from '../constants';
+import { push } from 'react-router-redux';
 import 'whatwg-fetch';
 
+export function updateURL(params, nextParams) {
+  params = Object.assign({}, params, nextParams);
+
+  let url = `${params.lat}/${params.lng}/${params.zoom}`;
+  if(params.area) {
+    url += `?area=${params.area}`;
+    if(params.year) {
+      url += `&year=${params.year}`;
+    }
+  }
+
+  return push(`/map/${url}`);
+};
 
 export function setSelectedArea(area) {
   return dispatch => {
@@ -44,6 +58,7 @@ export function setYear(year) {
       type: YEAR,
       payload: year
     });
+    dispatch(updateURL({ year }));
   }
 };
 
@@ -56,36 +71,74 @@ export function setAction(action) {
   };
 };
 
-export function fetchGeo(rectangleBounds, year) {
-  return dispatch => {
+export function fetchData(routerParams, rectangleBounds, year) {
+  return (dispatch, getState) => {
+    const state = getState().map;
+
     dispatch({
       type: LOADING,
       payload: true
     });
 
+    if(!rectangleBounds) rectangleBounds = state.selectedArea;
     const rectangleLatLng = [
       [ rectangleBounds[1], rectangleBounds[0] ],
       [ rectangleBounds[1], rectangleBounds[2] ],
       [ rectangleBounds[3], rectangleBounds[2] ],
       [ rectangleBounds[3], rectangleBounds[0] ]
     ];
-
     const coords = `[${rectangleLatLng.map(arr => `[${arr.toString()}]`).toString()}]`;
 
-    fetch(`http://vizz.water-test.appspot.com/water?coords=${coords}&date=${year}-01-01`)
+    let yearlyPercentage, geometries;
+    fetch(`http://waterapp.enviro-service.appspot.com/water/series?coords=${coords}&begin=1999-01-01`)
       .then(response => response.json())
+      /* We parse the data */
       .then(response => {
+        yearlyPercentage = response.result.map(d => {
+          return {
+            year: +d.date.slice(0, 4),
+            percentage: d.area
+          }
+        });
+      })
+      /* We fetch the geometries
+       * NOTE: we need to do it after in order to have the last year with data
+       * in case the user hasn't selected a year yet */
+      .then(() => {
+        /* TODO: change as soon as the API is fixed for 2013 and 2014 */
+        const lastYearWithDate = 2012; //yearlyPercentage[yearlyPercentage.length - 1].year
+
+        let year = year || routerParams.year;
+        if(!year) {
+          year = lastYearWithDate;
+          dispatch(updateURL(routerParams, { year }));
+        }
+
+        return fetch(`http://vizz.water-test.appspot.com/water?coords=${coords}&date=${year}-01-01`);
+      })
+      .then(response => response.json())
+      /* We parse the data */
+      .then(response => geometries = response.result.features)
+      .then(() => {
         dispatch({
-          type: GEO_DATA,
-          payload: response.result.features
+          type: DATA,
+          payload: { yearlyPercentage, geometries }
         });
       })
       .catch(response => {
+        let error;
+        if(!year) {
+          error = 'There was an error doing the analysis of the are you’ve selected. Please try again.';
+        } else {
+          error = 'There was an error doing the analysis of the are you’ve selected. Please try again.';
+        }
+
         dispatch({
           type: ERROR,
-          payload: 'There was an error doing the analysis of the are you’ve selected. Please try again.'
+          payload: error
         });
       })
+      /* We always remove the loading spinner */
       .then(() => {
         dispatch({
           type: LOADING,

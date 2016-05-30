@@ -20,11 +20,11 @@ class App extends Component {
         <Map
           zoom={this.props.zoom}
           latLng={[this.props.lat, this.props.lng]}
-          year={this.props.year}
           selectedArea={this.props.area}
           setSelectedArea={this.props.setSelectedArea}
           setLatLng={this.props.setLatLng}
           setZoom={this.props.setZoom}
+          fetchData={this.props.fetchData}
         />
         <Dashboard
           selectedArea={this.props.area}

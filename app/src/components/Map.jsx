@@ -80,6 +80,8 @@ class Map extends Component {
         [ nextProps.mapBoundingBox[0], nextProps.mapBoundingBox[2] ],
         [ nextProps.mapBoundingBox[1], nextProps.mapBoundingBox[3] ]
       ], { animate: true });
+      /* The map doesn't trigger a dragend event when using fitBounds */
+      this.props.setLatLng(this.map.getCenter())
       this.props.resetBoundingBox();
     }
   }
@@ -154,7 +156,7 @@ class Map extends Component {
     new L.Rectangle(new L.LatLngBounds(southWest, northEast), rectangleStyles)
       .addTo(this.drawnLayer);
 
-    this.props.fetchData(this.rectangleBounds, this.props.year);
+    this.props.fetchData(this.rectangleBounds);
   }
 
   /**
@@ -190,7 +192,7 @@ class Map extends Component {
     this.drawnLayer.addLayer(rectangle);
     this.props.setSelectedArea(this.rectangleBounds);
     this.props.setMode(null);
-    this.props.fetchData(this.rectangleBounds, this.props.year);
+    this.props.fetchData(this.rectangleBounds);
   }
 
   /**
@@ -206,7 +208,7 @@ class Map extends Component {
     this.props.setSelectedArea(this.rectangleBounds);
     this.props.setMode(null);
 
-    this.props.fetchData(this.rectangleBounds, this.props.year);
+    this.props.fetchData(this.rectangleBounds);
   }
 
   /**

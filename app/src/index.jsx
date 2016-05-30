@@ -29,11 +29,13 @@ const reducer = combineReducers({
  * @info(http://redux.js.org/docs/basics/Store.html)
  * @type {Object}
  */
-const middlewareRouter = routerMiddleware(hashHistory)
+const middlewareRouter = routerMiddleware(hashHistory);
 const store = createStore(
   reducer,
-  applyMiddleware(thunk),
-  applyMiddleware(middlewareRouter)
+  /* The router middleware MUST be before thunk otherwise the URL changes inside
+   * a thunk function won't work properly */
+  applyMiddleware(middlewareRouter),
+  applyMiddleware(thunk)
 );
 
 /**
