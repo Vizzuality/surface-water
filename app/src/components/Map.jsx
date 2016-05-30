@@ -3,6 +3,7 @@
 import React, {Component} from 'react';
 import L from 'leaflet';
 import leafletDraw from 'leaflet-draw';
+import { formatPercentage } from '../helpers/utils';
 
 import { MapSearchControl } from '../containers';
 
@@ -256,6 +257,25 @@ class Map extends Component {
   }
 
   /**
+   * Generate the content (HTML) of the popup depending on the data
+   * @param  {Object} yearlyPercentages the list of percentages for the
+   *                                    selected area
+   * @return {String}                   HTML content
+   */
+  getPopupContent(yearlyPercentage) {
+    const percentage = yearlyPercentage
+      .filter(o => o.year === this.props.year)[0]
+      .percentage;
+
+    return `
+      <div class="${stylesPopup.number}">
+        ${formatPercentage(percentage)}
+      </div>
+      Of the selected area is covered in water
+    `;
+  }
+
+  /**
    * Remove the previous water geometries and render the new
    * @param  {Array} data geometries + yearly percentage
    */
@@ -275,7 +295,7 @@ class Map extends Component {
     if(noData) {
       this.showPopup(noDataError, stylesPopup['-error']);
     } else {
-      this.showPopup('TODO: show data');
+      this.showPopup(this.getPopupContent(data.yearlyPercentage));
     }
 
     /* NOTE: we move the rectangle on top of the geometries

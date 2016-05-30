@@ -28,6 +28,10 @@
     border-radius: 0;
     background-color: $color-3;
     box-shadow: 0 0 15px 0 rgba(13, 13, 13, .1);
+
+    > :global(.leaflet-popup-content) {
+      margin: 15px 10px 25px 10px !important;
+    }
   }
 
   &.-error {
@@ -39,5 +43,9 @@
       color: $color-3;
       background-color: $color-1;
     }
+  }
+
+  .number {
+    font-size: $font-size-huge;
   }
 }
