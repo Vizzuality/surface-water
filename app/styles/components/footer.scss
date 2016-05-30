@@ -30,6 +30,11 @@
       &:first-of-type { border-left: none; }
       &.menu-item-highlight { color: $color-2; }
 
+      > a {
+        color: $color-9;
+        text-decoration: none;
+      }
+
       .vizzuality-logo {
         display: inline-block;
         width: 49px;
