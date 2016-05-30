@@ -23,6 +23,6 @@ if (process.env.NODE_ENV === 'production') {
   }));
 }
 
-app.use(serve(path.join(__dirname, 'public')));
+app.use(serve(path.join(__dirname, 'app/public')));
 
 app.listen(port);

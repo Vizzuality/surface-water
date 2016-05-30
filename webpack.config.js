@@ -2,7 +2,8 @@
 
 const webpack = require('webpack');
 const path = require('path');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const config = {
 
@@ -18,8 +19,6 @@ const config = {
     filename: 'bundle.js',
     publicPath: ''
   },
-
-  devtool: 'inline-source-map',
 
   module: {
     loaders: [
@@ -54,7 +53,11 @@ const config = {
   plugins: [
     new ExtractTextPlugin('styles.css', {
         allChunks: true
-    })
+    }),
+    new CopyWebpackPlugin([
+      { from: 'index.html' },
+      { from: 'public' }
+    ])
   ]
 
 };
@@ -75,7 +78,7 @@ if (!process.env.NODE_ENV === 'production') {
   config.plugins.push(
     new webpack.NoErrorsPlugin()
   );
-  config.devtool = 'source-map';
+  config.devtool = 'inline-source-map';
 }
 
 module.exports = config;
