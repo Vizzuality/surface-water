@@ -29,6 +29,14 @@
       border-left: 1px solid #343b3e;
       &:first-of-type { border-left: none; }
       &.menu-item-highlight { color: $color-2; }
+
+      .vizzuality-logo {
+        display: inline-block;
+        width: 49px;
+        height: 12px;
+        vertical-align: middle;
+        > use { fill: $color-9; }
+      }
     }
   }
 

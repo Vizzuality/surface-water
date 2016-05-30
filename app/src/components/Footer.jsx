@@ -12,7 +12,7 @@ class Footer extends Component {
         <ul className={styles.menu}>
           <li className={styles['menu-item'] + ' ' + styles['menu-item-highlight']}>Know more</li>
           <li className={styles['menu-item']}>Contact</li>
-          <li className={styles['menu-item']}>A data visualisation by <img/></li>
+          <li className={styles['menu-item']}>A data visualisation by <a href="http://www.vizzuality.com" target="_blank" rel="noreferrer"><svg className={styles['vizzuality-logo']}><use xlinkHref="#vizzualityIcon" x="0" y="0" /></svg></a></li>
         </ul>
         <img className={styles.share} />
       </div>
