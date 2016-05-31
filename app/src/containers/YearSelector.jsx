@@ -5,7 +5,8 @@ import YearSelector from '../components/YearSelector';
 
 const mapStateToProps = state => {
   return {
-    data: state.map.data.yearlyPercentage
+    data: state.map.data.yearlyPercentage,
+    loading: state.map.loading
   };
 };
 

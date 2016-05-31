@@ -1,6 +1,7 @@
 import {SELECTED_AREA, MODE, ZOOM, LATLNG, YEAR, ACTION, LOADING, ERROR, DATA, SEARCH} from '../constants';
 import { push } from 'react-router-redux';
 import 'whatwg-fetch';
+import Promise from 'promise-polyfill';
 
 export function updateURL(params, nextParams) {
   params = Object.assign({}, params, nextParams);
@@ -74,17 +75,20 @@ export function setAction(action) {
 export function fetchData(routerParams, rectangleBounds, year) {
   return (dispatch, getState) => {
     const state = getState().map;
+    let fetchSeries = true;
+
+    year = year || routerParams.year;
 
     dispatch({
       type: LOADING,
       payload: true
     });
 
-    /* By removing the data first, we make it easy for the components to know
-     * when new data arrive */
-    dispatch(emptyData());
-
-    if(!rectangleBounds) rectangleBounds = state.selectedArea;
+    if(!rectangleBounds) {
+      /* We just want to fetch the new geometries */
+      fetchSeries = false;
+      rectangleBounds = routerParams.area.split(',');
+    }
     const rectangleLatLng = [
       [ rectangleBounds[1], rectangleBounds[0] ],
       [ rectangleBounds[1], rectangleBounds[2] ],
@@ -93,18 +97,29 @@ export function fetchData(routerParams, rectangleBounds, year) {
     ];
     const coords = `[${rectangleLatLng.map(arr => `[${arr.toString()}]`).toString()}]`;
 
+    /* By removing the data first, we make it easy for the components to know
+     * when new data arrive */
+    dispatch(emptyData.apply(null, fetchSeries ? [] : [ 'yearlyPercentage' ]));
+
     let yearlyPercentage, geometries;
-    fetch(`http://waterapp.enviro-service.appspot.com/water/series?coords=${coords}&begin=1999-01-01`)
-      .then(response => response.json())
-      /* We parse the data */
-      .then(response => {
-        yearlyPercentage = response.result.map(d => {
-          return {
-            year: +d.date.slice(0, 4),
-            percentage: d.area
-          }
-        });
-      })
+
+    /* We only fetch the series if the rectangleBounds changed */
+    new Promise((resolve, reject) => {
+      if(!fetchSeries) return resolve();
+      fetch(`http://waterapp.enviro-service.appspot.com/water/series?coords=${coords}&begin=1999-01-01`)
+        .then(response => response.json())
+        /* We parse the data */
+        .then(response => {
+          yearlyPercentage = response.result.map(d => {
+            return {
+              year: +d.date.slice(0, 4),
+              percentage: d.area
+            }
+          });
+        })
+        .then(resolve)
+        .catch(reject);
+    })
       /* We fetch the geometries
        * NOTE: we need to do it after in order to have the last year with data
        * in case the user hasn't selected a year yet */
@@ -112,7 +127,6 @@ export function fetchData(routerParams, rectangleBounds, year) {
         /* TODO: change as soon as the API is fixed for 2013 and 2014 */
         const lastYearWithDate = 2012; //yearlyPercentage[yearlyPercentage.length - 1].year
 
-        let year = year || routerParams.year;
         if(!year) {
           year = lastYearWithDate;
           dispatch(updateURL(routerParams, { year }));
@@ -124,9 +138,13 @@ export function fetchData(routerParams, rectangleBounds, year) {
       /* We parse the data */
       .then(response => geometries = response.result.features)
       .then(() => {
+        const payload = {};
+        if(yearlyPercentage) payload.yearlyPercentage = yearlyPercentage;
+        if(geometries) payload.geometries = geometries;
+
         dispatch({
           type: DATA,
-          payload: { yearlyPercentage, geometries }
+          payload
         });
       })
       .catch(response => {
@@ -152,10 +170,12 @@ export function fetchData(routerParams, rectangleBounds, year) {
   };
 };
 
-export function emptyData() {
+export function emptyData(...keep) {
+  const payload = { yearlyPercentage: null, geometries: null };
+  if(keep.length) keep.forEach(v => delete payload[v]);
   return {
     type: DATA,
-    payload: { yearlyPercentage: null, geometries: null }
+    payload
   };
 };
 

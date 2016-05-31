@@ -35,9 +35,9 @@ class Map extends Component {
     this.initDrawer();
   }
 
-  componentWillReceiveProps(nextProps) {
-    if(this.props.mode !== nextProps.mode) {
-      switch(nextProps.mode) {
+  componentDidUpdate(previousProps) {
+    if(this.props.mode !== previousProps.mode) {
+      switch(this.props.mode) {
         case 'drawing':
           this.drawing.enable();
           break;
@@ -49,13 +49,13 @@ class Map extends Component {
           break;
 
         default:
-          this.props.mode === 'drawing' && this.drawing.disable();
-          this.props.mode === 'editing' && this.editing.disable();
+          previousProps.mode === 'drawing' && this.drawing.disable();
+          previousProps.mode === 'editing' && this.editing.disable();
       }
     }
 
-    if(this.props.action !== nextProps.action) {
-      switch(nextProps.action) {
+    if(this.props.action !== previousProps.action) {
+      switch(this.props.action) {
         case 'save':
           this.applyEditing();
           break;
@@ -67,21 +67,21 @@ class Map extends Component {
       this.props.setAction(null);
     }
 
-    if(this.props.selectedArea && !nextProps.selectedArea) {
+    if(previousProps.selectedArea && !this.props.selectedArea) {
       this.deleteDrawing();
       this.deleteWaterGeos();
     }
 
-    if((!this.props.data || !this.props.data.geos ||
-      !this.props.data.yearlyPercentage) && nextProps.data.geos &&
-      nextProps.data.yearlyPercentage) {
-      this.renderWaterGeos(nextProps.data);
+    if((!previousProps.data || !previousProps.data.geos ||
+      !previousProps.data.yearlyPercentage) && this.props.data.geos &&
+      this.props.data.yearlyPercentage) {
+      this.renderWaterGeos();
     }
 
-    if(!this.props.mapBoundingBox && nextProps.mapBoundingBox) {
+    if(!previousProps.mapBoundingBox && this.props.mapBoundingBox) {
       this.map.fitBounds([
-        [ nextProps.mapBoundingBox[0], nextProps.mapBoundingBox[2] ],
-        [ nextProps.mapBoundingBox[1], nextProps.mapBoundingBox[3] ]
+        [ this.props.mapBoundingBox[0], this.props.mapBoundingBox[2] ],
+        [ this.props.mapBoundingBox[1], this.props.mapBoundingBox[3] ]
       ], { animate: true });
       /* The map doesn't trigger a dragend event when using fitBounds */
       this.props.setLatLng(this.map.getCenter())
@@ -277,16 +277,17 @@ class Map extends Component {
 
   /**
    * Remove the previous water geometries and render the new
-   * @param  {Array} data geometries + yearly percentage
    */
-  renderWaterGeos(data) {
-    data.geos.forEach(geo => this.waterLayer.addData(geo));
+  renderWaterGeos() {
+    this.deleteWaterGeos();
+
+    this.props.data.geos.forEach(geo => this.waterLayer.addData(geo));
     this.waterLayer.setStyle(waterStyles);
 
     /* We check whether the percentage is always 0 */
     let noData = true;
-    for(let i = 0, j = data.yearlyPercentage.length; i < j; i++) {
-      if(data.yearlyPercentage[i].percentage > 0) {
+    for(let i = 0, j = this.props.data.yearlyPercentage.length; i < j; i++) {
+      if(this.props.data.yearlyPercentage[i].percentage > 0) {
         noData = false;
         break;
       }
@@ -295,7 +296,7 @@ class Map extends Component {
     if(noData) {
       this.showPopup(noDataError, stylesPopup['-error']);
     } else {
-      this.showPopup(this.getPopupContent(data.yearlyPercentage));
+      this.showPopup(this.getPopupContent(this.props.data.yearlyPercentage));
     }
 
     /* NOTE: we move the rectangle on top of the geometries

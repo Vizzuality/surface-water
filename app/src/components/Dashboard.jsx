@@ -61,7 +61,7 @@ class Dashboard extends Component {
             {this.props.mode === 'editing' ? 'Save' : 'Edit'}
           </Button>
         </div>
-        { this.showYearSelector() && <YearSelector year={this.props.year} /> }
+        { this.showYearSelector() && <YearSelector year={this.props.year} setYear={this.props.setYear} /> }
       </div>;
 
     return (

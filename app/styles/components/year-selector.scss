@@ -25,6 +25,12 @@
       &.-left  { transform: rotate(90deg); }
       &.-right { transform: rotate(-90deg);  }
     }
+
+    &.-disabled {
+      cursor: default;
+      .icon > use { fill: $color-16; }
+      &:hover { background-color: $color-20; }
+    }
   }
 
   > svg {

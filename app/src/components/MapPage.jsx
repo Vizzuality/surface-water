@@ -31,6 +31,7 @@ class App extends Component {
           year={this.props.year}
           selectedArea={this.props.area}
           setSelectedArea={this.props.setSelectedArea}
+          setYear={this.props.setYear}
         />
         <Footer/>
       </div>
