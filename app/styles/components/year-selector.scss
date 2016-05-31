@@ -8,13 +8,17 @@
   height: 100%;
 
   > .button {
+    position: relative;
     height: 100%;
     padding: 0 20px;
     background-color: $color-20;
     &:hover { background-color: $color-12; }
 
     .icon {
-      display: inline;
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
       width: 9px;
       height: 6px;
       vertical-align: bottom;
@@ -22,8 +26,8 @@
 
       > use { fill: $color-2; }
 
-      &.-left  { transform: rotate(90deg); }
-      &.-right { transform: rotate(-90deg);  }
+      &.-left  { transform: translate(-50%, -50%) rotate(90deg); }
+      &.-right { transform: translate(-50%, -50%) rotate(-90deg);  }
     }
 
     &.-disabled {
