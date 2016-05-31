@@ -10,8 +10,6 @@
   background-color: #242426 !important;
 
   :global(.leaflet-control-zoom) {
-    display: flex;
-    flex-direction: column-reverse;
     margin-top: 50px;
     margin-right: 70px;
     box-shadow: none;
