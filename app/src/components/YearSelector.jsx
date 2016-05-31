@@ -25,6 +25,8 @@ class YearSelector extends Component {
   }
 
   renderChart() {
+    if(!this.refs.svg) return;
+
     this.refs.svg.innerHTML = '';
 
     const containerBounds = this.refs.svg.getBoundingClientRect();
