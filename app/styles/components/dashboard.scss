@@ -42,8 +42,13 @@
     justify-content: flex-start;
     align-items: center;
 
-    > .button {
-      margin-right: 3px;
+    > .buttons {
+      margin-right: 30px;
+      flex-shrink: 0;
+
+      > .button {
+        margin-right: 3px;
+      }
     }
   }
 }

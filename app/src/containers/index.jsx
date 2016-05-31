@@ -8,3 +8,4 @@ export ErrorModal from './errorModal';
 export MapSearchControl from './mapSearchControl';
 export SearchModal from './searchModal';
 export Message from './message';
+export YearSelector from './yearSelector';

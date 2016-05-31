@@ -1,0 +1,122 @@
+@import "../settings";
+
+.container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+
+  > .button {
+    height: 100%;
+    padding: 0 20px;
+    background-color: $color-20;
+    &:hover { background-color: $color-12; }
+
+    .icon {
+      display: inline;
+      width: 9px;
+      height: 6px;
+      vertical-align: bottom;
+      transform-origin: center;
+
+      > use { fill: $color-2; }
+
+      &.-left  { transform: rotate(90deg); }
+      &.-right { transform: rotate(-90deg);  }
+    }
+  }
+
+  > svg {
+    flex-grow: 1;
+    height: 100%;
+    image-rendering: optimizeQuality;
+
+    .axis {
+      line, path {
+        fill: none;
+        stroke: $color-3;
+        stroke-width: 2px;
+      }
+
+      text {
+        fill: $color-19;
+        font-family: "MontSerrat", sans-serif;
+        font-size: $font-size-tiny;
+        letter-spacing: .4px;
+        transform: translateY(7px);
+        cursor: pointer;
+      }
+
+      circle {
+        fill: $color-15;
+        stroke: $color-3;
+        stroke-width: 1px;
+        cursor: pointer;
+
+        &.-active {
+          fill: $color-2;
+        }
+      }
+    }
+
+    .graph {
+      > rect {
+        /* If the fill is none, the cursor property isn't applied */
+        fill: transparent;
+        stroke: none;
+        cursor: pointer;
+      }
+
+      > path {
+        fill: none;
+        stroke: $color-19;
+        stroke-width: 1px;
+        cursor: pointer;
+      }
+
+      > .focus-circle {
+        fill: $color-2;
+        stroke: none;
+      }
+    }
+  }
+}
+
+/* Must be outside of the container because it will be absolutely positioned
+ * relative to the body */
+.popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 180px;
+  padding: 20px;
+  text-align: center;
+  font-family: "PT Sans", sans-serif;
+  font-weight: $font-weight-normal;
+  font-size: $font-size-x-small;
+  color: $color-13;
+  border-radius: 0;
+  background-color: $color-3;
+  box-shadow: 0 0 15px 0 rgba(13, 13, 13, .1);
+  opacity: 1;
+  transition: transform .1s ease-in-out, opacity .3s;
+  will-change: transform;
+  z-index: 1;
+  pointer-events: none;
+
+  &:after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    transform: translate(-50%, -50%) rotate(45deg);
+    background-color: $color-3;
+    box-shadow: 0 0 15px 0 rgba(13, 13, 13, .1);
+  }
+
+
+  &.-hidden { opacity: 0; }
+}

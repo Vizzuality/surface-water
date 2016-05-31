@@ -28,6 +28,7 @@ class App extends Component {
           fetchData={this.props.fetchData}
         />
         <Dashboard
+          year={this.props.year}
           selectedArea={this.props.area}
           setSelectedArea={this.props.setSelectedArea}
         />
