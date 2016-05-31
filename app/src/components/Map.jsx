@@ -358,7 +358,7 @@ class Map extends Component {
       <div class="${stylesPopup.number}">
         ${formatPercentage(percentage)}
       </div>
-      Of the selected area is covered in water
+      of the selected area is covered in water
     `;
   }
 
