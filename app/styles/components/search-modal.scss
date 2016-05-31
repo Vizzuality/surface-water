@@ -47,6 +47,7 @@
         font-weight: $font-weight-normal;
         line-height: 40px;
         color: $color-8;
+        outline: none;
       }
 
       > input::-webkit-input-placeholder { opacity: .6; }
