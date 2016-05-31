@@ -1,49 +1,64 @@
 @import "../settings";
 
-.map {
+.container {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: calc(100% - 116px);
   z-index: 0;
-  background-color: #242426 !important;
 
-  :global(.leaflet-control-zoom) {
-    margin-top: 50px;
-    margin-right: 70px;
-    box-shadow: none;
+  > .map {
+    height: 100%;
+    background-color: $color-2 !important;
 
-    > :global(.leaflet-control-zoom-in),
-    > :global(.leaflet-control-zoom-out) {
-      width: 30px;
-      height: 30px;
-      margin-bottom: 10px;
-      color: $color-2;
-      border-radius: 0;
-      border-bottom: none;
+    :global(.leaflet-control-zoom) {
+      margin-top: 50px;
+      margin-right: 70px;
       box-shadow: none;
-      background-color: $color-3;
-      transition: color .3s, background-color .3s;
 
-      &:hover {
-        color: $color-14;
-        background-color: $color-15;
-      }
-
-      &:global(.leaflet-disabled),
-      &:global(.leaflet-disabled):hover {
-        color: $color-16;
+      > :global(.leaflet-control-zoom-in),
+      > :global(.leaflet-control-zoom-out) {
+        width: 30px;
+        height: 30px;
+        margin-bottom: 10px;
+        color: $color-2;
+        border-radius: 0;
+        border-bottom: none;
+        box-shadow: none;
         background-color: $color-3;
-        cursor: default;
+        transition: color .3s, background-color .3s;
+
+        &:hover {
+          color: $color-14;
+          background-color: $color-15;
+        }
+
+        &:global(.leaflet-disabled),
+        &:global(.leaflet-disabled):hover {
+          color: $color-16;
+          background-color: $color-3;
+          cursor: default;
+        }
       }
     }
+
+    :global(.leaflet-control-attribution) {
+      color: $color-9;
+      margin: 0 70px 5px 0;
+      background: none;
+      > a { color: $color-2; }
+    }
+
   }
 
-  :global(.leaflet-control-attribution) {
-    color: $color-9;
-    margin: 0 70px 5px 0;
-    background: none;
-    > a { color: $color-2; }
+  > .minimap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    transform-origin: right bottom;
+    cursor: pointer;
   }
 }

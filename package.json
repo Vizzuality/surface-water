@@ -35,6 +35,7 @@
     "koa-webpack-dev-middleware": "^1.2.1",
     "leaflet": "^0.7.7",
     "leaflet-draw": "^0.3.0",
+    "leaflet.sync": "0.0.5",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
     "react-redux": "^4.4.5",

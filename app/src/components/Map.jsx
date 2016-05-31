@@ -3,6 +3,7 @@
 import React, {Component} from 'react';
 import L from 'leaflet';
 import leafletDraw from 'leaflet-draw';
+import 'leaflet.sync';
 import { formatPercentage } from '../helpers/utils';
 
 import { MapSearchControl } from '../containers';
@@ -98,8 +99,10 @@ class Map extends Component {
 
     L.control.zoom({ position: 'topright' }).addTo(this.map);
 
-    L.tileLayer(`http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}${window.devicePixelRatio >= 2 ? '@2x' : ''}.png`, {
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://cartodb.com/attributions">CartoDB</a>',
+    this.basemap = L.tileLayer(`https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}${window.devicePixelRatio >= 2 ? '@2x' : ''}.png?access_token={accessToken}`, {
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+      id: 'mst-trail.812c1ba5',
+      accessToken: 'pk.eyJ1IjoibXN0LXRyYWlsIiwiYSI6ImNpb3ZhYW83dzAwNjV3OWtqY2psb2tmY28ifQ.M9Apjn7kvtfpMwbSf9kNYA',
       noWrap: true,
       minZoom: 2
     }).addTo(this.map);
@@ -114,6 +117,29 @@ class Map extends Component {
 
     this.waterLayer =  L.geoJson().addTo(this.map);
 
+    /* We create the minimap */
+
+    this.positionMinimap();
+
+    this.minimap = L.map(this.refs.minimap, {
+      zoom: this.props.zoom,
+      center: this.props.latLng,
+      zoomControl: false
+    });
+
+    this.disableInteraction(this.minimap);
+
+    this.minimapBasemap = L.tileLayer(`https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}${window.devicePixelRatio >= 2 ? '@2x' : ''}.png?access_token={accessToken}`, {
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+      id: 'mstg.e176fba3',
+      accessToken: 'pk.eyJ1IjoibXN0ZyIsImEiOiJjaWs4ajl2N2MwMDF3d2JsdzNrYmc3bm1wIn0.sD0TMuradtGVcjaPuwZOwA',
+      noWrap: true,
+      minZoom: 2
+    }).addTo(this.minimap);
+
+    /* We sync the two maps */
+    this.map.sync(this.minimap);
+
     this.setMapListeners();
   }
 
@@ -125,6 +151,32 @@ class Map extends Component {
       this.props.setLatLng(this.map.getCenter());
     });
     this.map.on('draw:created', e => this.saveRectangle(e.layer));
+  }
+
+  /**
+   * Compute and set the position to the minimap
+   */
+  positionMinimap() {
+    const body = document.body.getBoundingClientRect();
+    const minimap = this.refs.minimap;
+    const scale = 70 / body.width;
+
+    minimap.style.transform = `scale(${scale}) translate(${-70 / scale}px, ${-60 / scale}px)`;
+    minimap.style.border = `${2 / scale}px solid #23d0ec`;
+  }
+
+  /**
+   * Disable all the interaction a map
+   * @param  {Leaflet map} map
+   */
+  disableInteraction(map) {
+    map.dragging.disable();
+    map.touchZoom.disable();
+    map.doubleClickZoom.disable();
+    map.scrollWheelZoom.disable();
+    map.boxZoom.disable();
+    map.keyboard.disable();
+    if (map.tap) map.tap.disable();
   }
 
   initDrawer() {
@@ -312,9 +364,15 @@ class Map extends Component {
   }
 
   render() {
-    return <div className={styles.map} ref="map">
-      <MapSearchControl/>
-    </div>;
+    return (
+      <div className={styles.container}>
+        <div className={styles.map} ref="map">
+          <MapSearchControl/>
+        </div>
+        <div className={styles.minimap} ref="minimap">
+        </div>
+      </div>
+    );
   }
 
 }
