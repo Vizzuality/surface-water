@@ -6,7 +6,7 @@ import Promise from 'promise-polyfill';
 export function updateURL(params, nextParams) {
   params = Object.assign({}, params, nextParams);
 
-  let url = `${params.lat}/${params.lng}/${params.zoom}`;
+  let url = `${params.basemap}/${params.lat}/${params.lng}/${params.zoom}`;
 
   url += '?' + ['area', 'year'].map(k => params[k] ? `${k}=${params[k]}` : '')
     .filter(k => k.length)

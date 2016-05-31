@@ -10,6 +10,7 @@ const mapStateToProps = (state, { params, location }) => {
     zoom: +params.zoom,
     lat: +params.lat,
     lng: +params.lng,
+    basemap: params.basemap,
     loading: state.map.loading,
     error: state.map.error,
     searchModal: state.map.search.active
@@ -31,6 +32,7 @@ const mapDispatchToProps = (dispatch, { params, location }) => {
     setSelectedArea: area => dispatch(updateURL(params, { area })),
     setZoom: zoom => dispatch(updateURL(params, { zoom })),
     setLatLng: latLng => dispatch(updateURL(params, { lat: latLng.lat, lng: latLng.lng })),
+    setBasemap: basemap => dispatch(updateURL(params, { basemap })),
     fetchData: (rectangleBounds, year) => dispatch(fetchData(params, rectangleBounds, year)),
     setYear: year => {
       dispatch(updateURL(params, { year }));

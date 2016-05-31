@@ -20,10 +20,12 @@ class App extends Component {
         <Map
           zoom={this.props.zoom}
           latLng={[this.props.lat, this.props.lng]}
+          basemap={this.props.basemap}
           selectedArea={this.props.area}
           year={this.props.year}
           setSelectedArea={this.props.setSelectedArea}
           setLatLng={this.props.setLatLng}
+          setBasemap={this.props.setBasemap}
           setZoom={this.props.setZoom}
           fetchData={this.props.fetchData}
         />

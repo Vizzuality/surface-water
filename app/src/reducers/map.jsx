@@ -5,6 +5,7 @@ const initialState = {
   mode: null,
   zoom: 10,
   latLng: [41.67855338051137, -120.43624877929688],
+  basemap: 'terrain',
   year: null,
   action: null,
   loading: false,
