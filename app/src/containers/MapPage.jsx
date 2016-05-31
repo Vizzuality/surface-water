@@ -17,7 +17,7 @@ const mapStateToProps = (state, { params, location }) => {
 
   if(location.query && Object.keys(location.query).length) {
     return Object.assign(props, {
-      area: location.query.area.split(',').map(n => +n),
+      area: location.query.area && location.query.area.split(',').map(n => +n),
       year: +location.query.year
     });
   }

@@ -7,12 +7,10 @@ export function updateURL(params, nextParams) {
   params = Object.assign({}, params, nextParams);
 
   let url = `${params.lat}/${params.lng}/${params.zoom}`;
-  if(params.area) {
-    url += `?area=${params.area}`;
-    if(params.year) {
-      url += `&year=${params.year}`;
-    }
-  }
+
+  url += '?' + ['area', 'year'].map(k => params[k] ? `${k}=${params[k]}` : '')
+    .filter(k => k.length)
+    .join('&');
 
   return push(`/map/${url}`);
 };
