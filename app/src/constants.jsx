@@ -8,3 +8,4 @@ export const LOADING = 'loading';
 export const ERROR = 'error';
 export const DATA = 'data';
 export const SEARCH = 'search';
+export const HISTORY = 'history';

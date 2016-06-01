@@ -1,4 +1,4 @@
-import {SELECTED_AREA, MODE, ZOOM, LATLNG, YEAR, ACTION, LOADING, ERROR, DATA, SEARCH} from '../constants';
+import {SELECTED_AREA, MODE, ZOOM, LATLNG, YEAR, ACTION, LOADING, ERROR, DATA, SEARCH, HISTORY} from '../constants';
 import { push } from 'react-router-redux';
 import Promise from 'promise-polyfill';
 
@@ -34,6 +34,17 @@ export function setAction(action) {
       type: ACTION,
       payload: action
     });
+  };
+};
+
+
+export function goTo(params, page) {
+  return dispatch => {
+    dispatch({
+      type: HISTORY,
+      payload: true
+    });
+    return dispatch(push(page));
   };
 };
 
@@ -209,4 +220,4 @@ export function deleteSearchBoundingBox() {
       payload: { boundingBox: null }
     });
   };
-}
+};

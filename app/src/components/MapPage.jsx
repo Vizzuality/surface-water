@@ -6,7 +6,7 @@ import {Map, Dashboard, Footer, LoadingSpinner, ErrorModal, SearchModal } from '
 import logo from '../../assets/logo2x_negative.png';
 import styles from '../../styles/components/map-page.scss';
 
-class App extends Component {
+class MapPage extends Component {
 
   render() {
     return (
@@ -35,11 +35,11 @@ class App extends Component {
           setSelectedArea={this.props.setSelectedArea}
           setYear={this.props.setYear}
         />
-        <Footer/>
+        <Footer goTo={this.props.goTo} />
       </div>
     );
   }
 
 }
 
-export default App;
+export default MapPage;

@@ -1,0 +1,66 @@
+@import "../settings";
+
+.container {
+  background-color: $color-5;
+  min-height: 100vh;
+
+  > .close-button {
+    position: absolute;
+    top: 35px;
+    right: 60px;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    > use { fill: $color-3; }
+  }
+
+  .logo {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 210px;
+    height: 87px;
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+
+  > .content {
+    position: relative;
+    max-width: 790px;
+    margin: 0 auto;
+    padding: 130px 0;
+    font-family: $font-family-1;
+    line-height: 27px;
+    font-size: $font-size-small;
+    font-weight: $font-weight-normal;
+    color: $color-3;
+
+    > h1 {
+      margin-bottom: 25px;
+      font-family: $font-family-2;
+      font-size: $font-size-x-big;
+      letter-spacing: 1.8px;
+      color: $color-7;
+      text-transform: uppercase;
+    }
+
+    > h2 {
+      font-family: $font-family-2;
+      font-size: $font-size-normal;
+      letter-spacing: .8px;
+      color: $color-7;
+      text-transform: uppercase;
+    }
+
+    .intro {
+      font-size: $font-size-medium;
+      line-height: 32px;
+      color: $color-7;
+      margin-bottom: 70px;
+    }
+
+    .button {
+      margin-top: 60px;
+    }
+  }
+}

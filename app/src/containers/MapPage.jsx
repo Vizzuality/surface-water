@@ -2,7 +2,7 @@
 
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { updateURL, fetchData, emptyData } from '../actions/map';
+import { updateURL, fetchData, emptyData, goTo } from '../actions/map';
 import MapPage from '../components/MapPage';
 
 const mapStateToProps = (state, { params, location }) => {
@@ -37,7 +37,8 @@ const mapDispatchToProps = (dispatch, { params, location }) => {
     setYear: year => {
       dispatch(updateURL(params, { year }));
       dispatch(fetchData(params, null, year));
-    }
+    },
+    goTo: page => dispatch(goTo(params, page))
   };
 };
 
