@@ -24,7 +24,7 @@ class Footer extends Component {
           <li className={styles['menu-item']}><a href={`mailto:${this.decodeRot13(contactEmail)}`}>Contact</a></li>
           <li className={styles['menu-item']}>A data visualisation by <a href="http://www.vizzuality.com" target="_blank" rel="noreferrer"><svg className={styles['vizzuality-logo']}><use xlinkHref="#vizzualityIcon" x="0" y="0" /></svg></a></li>
         </ul>
-        <img className={styles.share} />
+        <svg className={styles.share} onClick={this.props.toggleShare} title="Share"><use xlinkHref="#shareIcon" x="0" y="0" /></svg>
       </div>
     );
   }

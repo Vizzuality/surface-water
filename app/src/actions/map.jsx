@@ -1,4 +1,4 @@
-import {SELECTED_AREA, MODE, ZOOM, LATLNG, YEAR, ACTION, LOADING, ERROR, DATA, SEARCH, HISTORY} from '../constants';
+import {SELECTED_AREA, MODE, ZOOM, LATLNG, YEAR, ACTION, LOADING, ERROR, DATA, SEARCH, HISTORY, SHARE} from '../constants';
 import { push } from 'react-router-redux';
 import Promise from 'promise-polyfill';
 
@@ -178,6 +178,15 @@ export function toggleSearch(active) {
   return dispatch => {
     dispatch({
       type: SEARCH,
+      payload: { active }
+    });
+  };
+};
+
+export function toggleShare(active) {
+  return dispatch => {
+    dispatch({
+      type: SHARE,
       payload: { active }
     });
   };

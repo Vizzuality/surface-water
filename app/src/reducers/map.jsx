@@ -1,4 +1,4 @@
-import {SELECTED_AREA, MODE, ZOOM, LATLNG, YEAR, ACTION, LOADING, ERROR, DATA, SEARCH, HISTORY} from '../constants';
+import {SELECTED_AREA, MODE, ZOOM, LATLNG, YEAR, ACTION, LOADING, ERROR, DATA, SEARCH, HISTORY, SHARE} from '../constants';
 
 const initialState = {
   selectedArea: null,
@@ -18,6 +18,9 @@ const initialState = {
     active: false,
     boundingBox: null,
     error: null
+  },
+  share: {
+    active: false
   },
   /* Whether the previous page belongs was part of the app */
   history: false
@@ -46,6 +49,12 @@ export default function(state = initialState, action) {
             search[k] = action.payload[k];
           }
           return Object.assign({}, state, { search });
+        case SHARE:
+          const share = Object.assign({}, state.share);
+          for(let k in action.payload) {
+            share[k] = action.payload[k];
+          }
+          return Object.assign({}, state, { share });
         case HISTORY:
           return Object.assign({}, state, { history: true })
         default:

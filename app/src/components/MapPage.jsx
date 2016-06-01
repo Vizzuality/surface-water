@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {Map, Dashboard, Footer, LoadingSpinner, ErrorModal, SearchModal } from '../containers';
+import {Map, Dashboard, Footer, LoadingSpinner, ErrorModal, SearchModal, ShareModal } from '../containers';
 
 import logo from '../../assets/logo2x_negative.png';
 import styles from '../../styles/components/map-page.scss';
@@ -17,6 +17,7 @@ class MapPage extends Component {
         { this.props.loading && <LoadingSpinner/> }
         { this.props.error && <ErrorModal text={this.props.error} /> }
         { this.props.searchModal && <SearchModal /> }
+        { this.props.shareModal && <ShareModal /> }
         <Map
           zoom={this.props.zoom}
           latLng={[this.props.lat, this.props.lng]}

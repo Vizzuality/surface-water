@@ -7,5 +7,6 @@ export LoadingSpinner from './loadingSpinner';
 export ErrorModal from './errorModal';
 export MapSearchControl from './mapSearchControl';
 export SearchModal from './searchModal';
+export ShareModal from './shareModal';
 export Message from './message';
 export YearSelector from './yearSelector';

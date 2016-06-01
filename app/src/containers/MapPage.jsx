@@ -13,7 +13,8 @@ const mapStateToProps = (state, { params, location }) => {
     basemap: params.basemap,
     loading: state.map.loading,
     error: state.map.error,
-    searchModal: state.map.search.active
+    searchModal: state.map.search.active,
+    shareModal: state.map.share.active
   };
 
   if(location.query && Object.keys(location.query).length) {

@@ -50,6 +50,10 @@
   }
 
   > .share {
-
+    width: 16px;
+    height: 16px;
+    margin-right: 60px;
+    cursor: pointer;
+    > use { fill: $color-2; }
   }
 }
