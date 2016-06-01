@@ -110,10 +110,10 @@ export function fetchData(routerParams, rectangleBounds, year) {
       })
       .catch(response => {
         let error;
-        if(!year) {
-          error = 'There was an error doing the analysis of the are you’ve selected. Please try again.';
+        if(!fetchSeries) {
+          error = 'There was an error retrieving the data for the selected year. Please try another one.';
         } else {
-          error = 'There was an error doing the analysis of the are you’ve selected. Please try again.';
+          error = 'There was an error doing the analysis of the are you’ve selected. Please try again with a smaller area.';
         }
 
         dispatch({
