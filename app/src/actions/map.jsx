@@ -89,8 +89,7 @@ export function fetchData(routerParams, rectangleBounds, year) {
        * NOTE: we need to do it after in order to have the last year with data
        * in case the user hasn't selected a year yet */
       .then(() => {
-        /* TODO: change as soon as the API is fixed for 2013 and 2014 */
-        const lastYearWithDate = 2012; //yearlyPercentage[yearlyPercentage.length - 1].year
+        const lastYearWithDate = yearlyPercentage[yearlyPercentage.length - 1].year;
 
         if(!year) {
           year = lastYearWithDate;
