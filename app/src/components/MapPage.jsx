@@ -3,7 +3,7 @@
 import React, {Component} from 'react';
 import {Map, Dashboard, Footer, LoadingSpinner, ErrorModal, SearchModal } from '../containers';
 
-import logo from '../../assets/logo2x.png';
+import logo from '../../assets/logo2x_negative.png';
 import styles from '../../styles/components/map-page.scss';
 
 class App extends Component {
