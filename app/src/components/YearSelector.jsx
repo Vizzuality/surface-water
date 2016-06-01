@@ -37,14 +37,13 @@ class YearSelector extends Component {
     const yScale = d3.scale.linear()
       .domain(d3.extent(this.props.data.map(o => o.percentage)))
       .range([ containerBounds.height - 37, 10 ]);
-    /* If the width of the container is lower than 550px, we only display half
-     * of the ticks */
-    const displayedTicks = this.props.data
-      .filter((v, i) => containerBounds.width <= 550 ? (i % 2) : true);
+    const displayedTicks = this.props.data;
     const xAxis = d3.svg.axis()
       .scale(xScale)
       .tickSize(0)
-      .tickValues(displayedTicks.map(o => o.year))
+      /* If the width of the container is lower than 550px, we only display half
+       * of the ticks */
+      .tickValues(displayedTicks.map(o => o.year).filter((y, i) => containerBounds.width <= 550 ? i % 2 : true))
       .tickFormat(d3.format('d'));
     const line = d3.svg.line()
       .interpolate('linear')
