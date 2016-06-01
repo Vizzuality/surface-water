@@ -97,7 +97,7 @@ export function fetchData(routerParams, rectangleBounds, year) {
           dispatch(updateURL(routerParams, { year }));
         }
 
-        return fetchWithTimeout(`http://vizz.water-test.appspot.com/water?coords=${coords}&date=${year}-01-01`, requestsTimeout);
+        return fetchWithTimeout(`http://waterapp.enviro-service.appspot.com/water?coords=${coords}&date=${year}-01-01`, requestsTimeout);
       })
       .then(response => response.json())
       /* We parse the data */
