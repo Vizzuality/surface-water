@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "build": "webpack -p",
-    "publish": "node publish.js",
+    "build": "NODE_ENV=production webpack -p && node minify-html.js",
+    "publish": "NODE_ENV=production node publish.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -50,7 +50,10 @@
     "babel-preset-stage-0": "^6.5.0",
     "copy-webpack-plugin": "^3.0.1",
     "css-loader": "^0.23.1",
+    "fs": "0.0.2",
     "gh-pages": "^0.11.0",
+    "glob": "^7.0.3",
+    "html-minifier": "^2.1.3",
     "image-webpack-loader": "^1.8.0",
     "node-sass": "^3.7.0",
     "sass-loader": "^3.2.0",

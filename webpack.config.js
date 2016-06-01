@@ -62,7 +62,7 @@ const config = {
 
 };
 
-if (!process.env.NODE_ENV === 'production') {
+if(process.env.NODE_ENV === 'production') {
   config.plugins.push(
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
@@ -70,14 +70,12 @@ if (!process.env.NODE_ENV === 'production') {
       compress: {
         unused: true,
         dead_code: true,
-        warnings: false
+        warnings: false,
+        drop_debugger: true
       }
     })
   );
 } else {
-  config.plugins.push(
-    new webpack.NoErrorsPlugin()
-  );
   config.devtool = 'inline-source-map';
 }
 
