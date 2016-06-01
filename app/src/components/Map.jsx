@@ -223,6 +223,9 @@ class Map extends Component {
       this.createRectangle(this.props.selectedArea);
     }
 
+    /* We customize the text of the popups */
+    L.drawLocal.edit.handlers.edit.tooltip.text = 'Drag handles to edit feature.';
+
     /* We init the Leaflet Draw plugin */
     new L.Control.Draw({
       edit: {

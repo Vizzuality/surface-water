@@ -51,8 +51,36 @@
       > a { color: $color-2; }
     }
 
+    /* We don't want the geometries to have the pointer cursor */
     :global(path.leaflet-clickable) {
       cursor: inherit;
+    }
+
+    :global(.leaflet-draw-tooltip) {
+      font-family: $font-family-1;
+      font-size: $font-size-x-small;
+      padding: 24px;
+      color: $color-13;
+      background: none;
+      border: none;
+      border-radius: 0;
+      background-color: $color-3;
+      box-shadow: 0 0 15px 0 rgba(13, 13, 13, .1);
+
+      &:before {
+        top: 15px;
+        left: -6px;
+        border-right-color: $color-3;
+        box-shadow: 0 0 15px 0 rgba(13, 13, 13, .1);
+      }
+
+      &:global(.leaflet-draw-tooltip-single):before {
+        top: 7px;
+      }
+
+      > :global(.leaflet-draw-tooltip-subtext) {
+        color: inherit;
+      }
     }
 
   }
