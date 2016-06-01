@@ -73,6 +73,11 @@ if(process.env.NODE_ENV === 'production') {
         warnings: false,
         drop_debugger: true
       }
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
     })
   );
 } else {
