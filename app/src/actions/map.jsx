@@ -1,7 +1,11 @@
 import {SELECTED_AREA, MODE, ZOOM, LATLNG, YEAR, ACTION, LOADING, ERROR, DATA, SEARCH} from '../constants';
 import { push } from 'react-router-redux';
-import 'whatwg-fetch';
 import Promise from 'promise-polyfill';
+
+import { fetchWithTimeout } from '../helpers/utils';
+
+/* Timeout for the requests before throwing an error */
+const requestsTimeout = 45000;
 
 export function updateURL(params, nextParams) {
   params = Object.assign({}, params, nextParams);
@@ -67,7 +71,7 @@ export function fetchData(routerParams, rectangleBounds, year) {
     /* We only fetch the series if the rectangleBounds changed */
     new Promise((resolve, reject) => {
       if(!fetchSeries) return resolve();
-      fetch(`http://waterapp.enviro-service.appspot.com/water/series?coords=${coords}&begin=1999-01-01`)
+      fetchWithTimeout(`http://waterapp.enviro-service.appspot.com/water/series?coords=${coords}&begin=1999-01-01`, requestsTimeout)
         .then(response => response.json())
         /* We parse the data */
         .then(response => {
@@ -93,7 +97,7 @@ export function fetchData(routerParams, rectangleBounds, year) {
           dispatch(updateURL(routerParams, { year }));
         }
 
-        return fetch(`http://vizz.water-test.appspot.com/water?coords=${coords}&date=${year}-01-01`);
+        return fetchWithTimeout(`http://vizz.water-test.appspot.com/water?coords=${coords}&date=${year}-01-01`, requestsTimeout);
       })
       .then(response => response.json())
       /* We parse the data */
@@ -110,16 +114,29 @@ export function fetchData(routerParams, rectangleBounds, year) {
       })
       .catch(response => {
         let error;
-        if(!fetchSeries) {
+        if(response.message === 'timeout') {
+          error = 'The analysis takes too long. Please try again with a smaller area.';
+        } else if(!fetchSeries) {
           error = 'There was an error retrieving the data for the selected year. Please try another one.';
+        } else if(yearlyPercentage) {
+          error = `There was an error retrieving the data for ${yearlyPercentage[yearlyPercentage.length - 1].year}. Please select another year to see the full results.`;
         } else {
-          error = 'There was an error doing the analysis of the are you’ve selected. Please try again with a smaller area.';
+          error = 'There was an error doing the analysis of the area you’ve selected. If the error keeps on appearing, try with a smaller area.';
         }
 
         dispatch({
           type: ERROR,
           payload: error
         });
+
+        /* In case the second request fails but we succeeded in fetching the
+         * series, update the store with them */
+        if(yearlyPercentage) {
+          dispatch({
+            type: DATA,
+            payload: { yearlyPercentage }
+          });
+        }
       })
       /* We always remove the loading spinner */
       .then(() => {
@@ -160,7 +177,7 @@ export function toggleSearch(active) {
 
 export function search(location) {
   return dispatch => {
-    fetch(`http://nominatim.openstreetmap.org/search/${location}?format=json&limit=1`)
+    fetchWithTimeout(`http://nominatim.openstreetmap.org/search/${location}?format=json&limit=1`, requestsTimeout)
       .then(response => response.json())
       .then(response => {
         if(response.length && response[0].boundingbox &&

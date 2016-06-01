@@ -1,3 +1,6 @@
+import Promise from 'promise-polyfill';
+import 'whatwg-fetch';
+
 /**
  * Format a number as a percentage. Values under 1% are represented as "< 1%".
  * @param  {Number} nb number to format
@@ -31,4 +34,18 @@ export function debounce(func, wait, immediate) {
 		timeout = setTimeout(later, wait);
 		if (callNow) func.apply(context, args);
 	};
+};
+
+/**
+ * Fetch the ressource using the Fetch API and reject the promise in case the
+ * timeout has been triggered. Return a promise.
+ * @param  {String}  url     url to fetch
+ * @param  {Number}  timeout time in ms
+ * @return {Promise}
+ */
+export function fetchWithTimeout(url, timeout) {
+  return new Promise((resolve, reject) => {
+    fetch(url).then(resolve, reject);
+    setTimeout(() => reject(new Error('timeout')), timeout);
+  });
 };
