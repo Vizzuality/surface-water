@@ -51,6 +51,10 @@
       > a { color: $color-2; }
     }
 
+    :global(path.leaflet-clickable) {
+      cursor: inherit;
+    }
+
   }
 
   > .minimap {
