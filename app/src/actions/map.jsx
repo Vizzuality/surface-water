@@ -89,10 +89,8 @@ export function fetchData(routerParams, rectangleBounds, year) {
        * NOTE: we need to do it after in order to have the last year with data
        * in case the user hasn't selected a year yet */
       .then(() => {
-        const lastYearWithDate = yearlyPercentage[yearlyPercentage.length - 1].year;
-
         if(!year) {
-          year = lastYearWithDate;
+          year = yearlyPercentage[yearlyPercentage.length - 1].year;
           dispatch(updateURL(routerParams, { year }));
         }
 
