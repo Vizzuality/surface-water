@@ -6,7 +6,7 @@
   height: 40px;
   line-height: 40px;
   font-size: $font-size-x-small;
-  font-family: "PT Sans", sans-serif;
+  font-family: $font-family-1;
   font-weight: $font-weight-normal;
   color: $color-2;
   cursor: pointer;
@@ -36,7 +36,7 @@
   }
 
   &.-uppercase {
-    font-family: "Montserrat", sans-serif;
+    font-family: $font-family-2;
     font-weight: $font-weight-bold;
     text-transform: uppercase;
   }

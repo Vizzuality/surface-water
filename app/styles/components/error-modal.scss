@@ -19,7 +19,7 @@
     z-index: 2;
     text-align: center;
     color: $color-3;
-    font-family: "PT Sans", sans-serif;
+    font-family: $font-family-1;
     font-size: $font-size-small;
     font-weight: $font-weight-normal;
     line-height: 27px;
@@ -28,7 +28,7 @@
     > .title {
       margin: 0 0 25px 0;
       padding: 0;
-      font-family: "Montserrat", sans-serif;
+      font-family: $font-family-2;
       font-size: $font-size-normal;
       font-weight: $font-weight-bold;
       text-transform: uppercase;
