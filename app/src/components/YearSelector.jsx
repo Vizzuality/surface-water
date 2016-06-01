@@ -67,6 +67,14 @@ class YearSelector extends Component {
 
     d3Axis.call(xAxis);
 
+    d3Axis.selectAll('.tick')
+      .on('click', year => {
+        if(year !== this.props.year) {
+          this.hidePopup();
+          this.props.setYear(year);
+        }
+      });
+
     d3Axis.selectAll('circle')
       .data(displayedTicks)
       .enter()
@@ -74,7 +82,13 @@ class YearSelector extends Component {
       .attr('class', d => d.year === this.props.year ? styles['-active'] : '')
       .attr('r', 5)
       .attr('cx', d => xScale(d.year))
-      .attr('cy', 0);
+      .attr('cy', 0)
+      .on('click', d => {
+        if(d.year !== this.props.year) {
+          this.hidePopup();
+          this.props.setYear(d.year);
+        }
+      });
 
     const d3Graph = container.append('g')
       .attr('class', styles.graph);
