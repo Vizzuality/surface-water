@@ -30,6 +30,7 @@
       height: 16px;
       cursor: pointer;
       > use { fill: $color-2; }
+      &:hover > use { fill: $color-14; }
     }
 
     > .input-container {

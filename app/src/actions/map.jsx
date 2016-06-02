@@ -1,4 +1,4 @@
-import {SELECTED_AREA, MODE, ZOOM, LATLNG, YEAR, ACTION, LOADING, ERROR, DATA, SEARCH, HISTORY, SHARE} from '../constants';
+import {SELECTED_AREA, MODE, ZOOM, LATLNG, YEAR, ACTION, LOADING, ERROR, DATA, SEARCH, HISTORY, SHARE, SPLASH} from '../constants';
 import { push } from 'react-router-redux';
 import Promise from 'promise-polyfill';
 
@@ -187,6 +187,21 @@ export function toggleShare(active) {
   return dispatch => {
     dispatch({
       type: SHARE,
+      payload: { active }
+    });
+  };
+};
+
+export function toggleSplash(active) {
+  return dispatch => {
+    if(active) {
+      localStorage.removeItem('recurrentUser');
+    } else {
+      localStorage.setItem('recurrentUser', true);
+    }
+
+    dispatch({
+      type: SPLASH,
       payload: { active }
     });
   };

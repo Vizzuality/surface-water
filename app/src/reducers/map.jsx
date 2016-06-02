@@ -1,4 +1,4 @@
-import {SELECTED_AREA, MODE, ZOOM, LATLNG, YEAR, ACTION, LOADING, ERROR, DATA, SEARCH, HISTORY, SHARE} from '../constants';
+import {SELECTED_AREA, MODE, ZOOM, LATLNG, YEAR, ACTION, LOADING, ERROR, DATA, SEARCH, HISTORY, SHARE, SPLASH} from '../constants';
 
 const initialState = {
   selectedArea: null,
@@ -21,6 +21,9 @@ const initialState = {
   },
   share: {
     active: false
+  },
+  splash: {
+    active: !localStorage.getItem('recurrentUser')
   },
   /* Whether the previous page belongs was part of the app */
   history: false
@@ -55,6 +58,12 @@ export default function(state = initialState, action) {
             share[k] = action.payload[k];
           }
           return Object.assign({}, state, { share });
+        case SPLASH:
+          const splash = Object.assign({}, state.splash);
+          for(let k in action.payload) {
+            splash[k] = action.payload[k];
+          }
+          return Object.assign({}, state, { splash });
         case HISTORY:
           return Object.assign({}, state, { history: true })
         default:
