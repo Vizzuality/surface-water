@@ -56,17 +56,18 @@
         letter-spacing: .4px;
         transform: translateY(7px);
         cursor: pointer;
+        transition: fill .3s;
+        &:hover { fill: $color-2; }
       }
+      .-active text { fill: $color-2; }
 
       circle {
         fill: $color-15;
         stroke: $color-3;
         stroke-width: 1px;
         cursor: pointer;
-
-        &.-active {
-          fill: $color-2;
-        }
+        transition: fill .3s;
+        &:hover, &.-active { fill: $color-2; }
       }
     }
 

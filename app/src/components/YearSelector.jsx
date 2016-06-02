@@ -67,6 +67,16 @@ class YearSelector extends Component {
     d3Axis.call(xAxis);
 
     d3Axis.selectAll('.tick')
+      .on('mouseover', year => {
+        d3Axis.selectAll('circle')
+          .filter(d => d.year === year)
+          .classed(styles['-active'], true);
+      })
+      .on('mouseout', year => {
+        d3Axis.selectAll('circle')
+          .filter(d => d.year === year)
+          .classed(styles['-active'], false);
+      })
       .on('click', year => {
         if(year !== this.props.year) {
           this.hidePopup();
@@ -82,6 +92,16 @@ class YearSelector extends Component {
       .attr('r', 5)
       .attr('cx', d => xScale(d.year))
       .attr('cy', 0)
+      .on('mouseover', d => {
+        d3Axis.selectAll('.tick')
+          .filter(year => year === d.year)
+          .classed(styles['-active'], true);
+      })
+      .on('mouseout', d => {
+        d3Axis.selectAll('.tick')
+          .filter(year => year === d.year)
+          .classed(styles['-active'], false);
+      })
       .on('click', d => {
         if(d.year !== this.props.year) {
           this.hidePopup();
