@@ -9,7 +9,7 @@
   padding: 0 60px;
   background-color: $color-4;
 
-  > .intro {
+  .intro {
     height: 100%;
     display: flex;
     justify-content: flex-start;
@@ -36,7 +36,7 @@
     }
   }
 
-  > .tools {
+  .tools {
     height: 100%;
     display: flex;
     justify-content: flex-start;
@@ -50,5 +50,24 @@
         margin-right: 3px;
       }
     }
+  }
+}
+
+/* Global animations for the dashboard */
+:global(.dashboard-enter), :global(.dashboard-appear) {
+  opacity: 0;
+
+  &:global(.dashboard-enter-active), &:global(.dashboard-appear-active) {
+    opacity: 1;
+    transition: opacity .3s ease;
+  }
+}
+
+:global(.dashboard-leave) {
+  opacity: 1;
+
+  &:global(.dashboard-leave-active) {
+    opacity: 0;
+    transition: opacity .3s ease;
   }
 }

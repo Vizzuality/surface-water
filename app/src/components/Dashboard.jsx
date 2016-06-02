@@ -1,6 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
+import ReactCSSTransitionGroup  from 'react-addons-css-transition-group';
 import { Button, YearSelector } from '../containers';
 
 import styles from '../../styles/components/dashboard.scss';
@@ -39,14 +40,14 @@ class Dashboard extends Component {
   }
 
   render() {
-    const intro = <div className={styles.intro}>
+    const intro = <div key="intro" className={styles.intro}>
         <Button classes={[ styles.button ]} color="primary" click={() => this.props.setMode('drawing')}>
           <svg className={styles.icon} title="Draw"><use xlinkHref="#drawIcon" x="0" y="0" /></svg>
         </Button>
         <p className={styles.text}>Draw a bounding box to start</p>
       </div>;
 
-    const tools = <div className={styles.tools}>
+    const tools = <div key="tools" className={styles.tools}>
         <div className={styles.buttons}>
           <Button
             classes={[ styles.button ]}
@@ -66,7 +67,15 @@ class Dashboard extends Component {
 
     return (
       <div className={styles.dashboard}>
-        {this.props.selectedArea ? tools : intro}
+        <ReactCSSTransitionGroup
+          transitionName="dashboard"
+          transitionAppear={true}
+          transitionAppearTimeout={200}
+          transitionEnterTimeout={200}
+          transitionLeaveTimeout={200}
+        >
+          {this.props.selectedArea ? tools : intro}
+        </ReactCSSTransitionGroup>
       </div>
     );
   }
