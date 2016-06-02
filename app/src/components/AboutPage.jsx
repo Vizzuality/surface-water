@@ -1,6 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
+import Promise from 'promise-polyfill';
 import { Link } from 'react-router';
 import { Button } from '../containers';
 
@@ -9,9 +10,30 @@ import styles from '../../styles/components/about-page.scss';
 
 class AboutPage extends Component {
 
+  scrollTop() {
+    return new Promise((resolve, reject) => {
+      let position = window.scrollY;
+      const duration = 150;
+      /* We assume 60 FPS, but the duration can vary depending on the actual
+       * performance */
+      const steps = Math.round(duration / 16.67);
+      const delta = position / steps;
+      const scroll = () => {
+        const newPosition = position - delta > 0 ? position - delta : 0;
+        scrollTo(0, newPosition);
+        position = newPosition;
+        if(position > 0) requestAnimationFrame(scroll);
+        else resolve();
+      };
+      requestAnimationFrame(scroll);
+    });
+  }
+
   goBack() {
-    if(this.props.history) return this.props.goBack();
-    this.props.goTo('/');
+    this.scrollTop().then(() => {
+      if(this.props.history) return this.props.goBack();
+      this.props.goTo('/');
+    });
   }
 
   render() {

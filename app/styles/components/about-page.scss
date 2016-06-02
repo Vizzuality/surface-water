@@ -64,3 +64,22 @@
     }
   }
 }
+
+/* Global animations for the map page */
+:global(.about-page-enter) {
+  opacity: 0;
+
+  &:global(.about-page-enter-active) {
+    opacity: 1;
+    transition: transform .2s ease-out, opacity .3s ease;
+  }
+}
+
+:global(.about-page-leave) {
+  opacity: 1;
+
+  &:global(.about-page-leave-active) {
+    opacity: 0;
+    transition: transform .2s ease-out, opacity .3s ease;
+  }
+}

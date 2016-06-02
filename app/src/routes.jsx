@@ -7,13 +7,15 @@ import {Router, Route, IndexRedirect} from 'react-router';
 
 class Routes extends Component{
   render(){
-    return <Router history={this.props.history}>
-      <Route path="/" component={AppContainer}>
-        <IndexRedirect to={`map/${this.props.basemap}/${this.props.latLng.join('/')}/${this.props.zoom}`}/>
-        <Route path="map/:basemap/:lat/:lng/:zoom" component={MapPageContainer} />
-        <Route path="about" component={AboutPageContainer} />
-      </Route>
-    </Router>;
+    return (
+      <Router history={this.props.history}>
+        <Route path="/" component={AppContainer}>
+          <IndexRedirect to={`map/${this.props.basemap}/${this.props.latLng.join('/')}/${this.props.zoom}`}/>
+          <Route path="map/:basemap/:lat/:lng/:zoom" component={MapPageContainer} />
+          <Route path="about" component={AboutPageContainer} key="page"/>
+        </Route>
+      </Router>
+    );
   }
 }
 
