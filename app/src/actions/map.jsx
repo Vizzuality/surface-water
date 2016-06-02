@@ -126,7 +126,19 @@ export function fetchData(routerParams, rectangleBounds, year) {
         } else if(!fetchSeries) {
           error = 'There was an error retrieving the data for the selected year. Please try another one.';
         } else if(yearlyPercentage) {
-          error = `There was an error retrieving the data for ${yearlyPercentage[yearlyPercentage.length - 1].year}. Please select another year to see the full results.`;
+          let noData = true;
+          for(let i = 0, j = yearlyPercentage.length; i < j; i++) {
+            if(yearlyPercentage[i].percentage > 0) {
+              noData = false;
+              break;
+            }
+          }
+
+          if(!noData) {
+            error = `There was an error retrieving the data for ${yearlyPercentage[yearlyPercentage.length - 1].year}. Please select another year to see the full results.`;
+          } else {
+            error = `It seems there's no data for the selected area. Please choose another one.`;
+          }
         } else {
           error = 'There was an error doing the analysis of the area you’ve selected. If the error keeps on appearing, try with a smaller area.';
         }
