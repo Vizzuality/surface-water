@@ -35,6 +35,10 @@
     font-weight: $font-weight-normal;
     color: $color-3;
 
+    @media screen and (max-width: 790px) {
+      padding: 130px 30px;
+    }
+
     > h1 {
       margin-bottom: 25px;
       font-family: $font-family-2;
