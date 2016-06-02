@@ -1,3 +1,5 @@
+import Promise from 'promise-polyfill';
+
 /* Polyfill for Object.assign
  * Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
  */
@@ -22,3 +24,6 @@ if (typeof Object.assign != 'function') {
     return target;
   };
 }
+
+/* Make the Promise object available globally for older browsers */
+window.Promise = Promise;

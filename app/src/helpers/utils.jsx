@@ -1,4 +1,3 @@
-import Promise from 'promise-polyfill';
 import 'whatwg-fetch';
 
 /**

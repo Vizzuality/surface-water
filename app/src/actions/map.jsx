@@ -1,6 +1,5 @@
 import {SELECTED_AREA, MODE, ZOOM, LATLNG, YEAR, ACTION, LOADING, ERROR, DATA, SEARCH, HISTORY, SHARE, SPLASH} from '../constants';
 import { push } from 'react-router-redux';
-import Promise from 'promise-polyfill';
 
 import { fetchWithTimeout } from '../helpers/utils';
 

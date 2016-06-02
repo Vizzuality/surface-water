@@ -1,7 +1,6 @@
 'use strict';
 
 import React, {Component} from 'react';
-import Promise from 'promise-polyfill';
 import { Link } from 'react-router';
 import { Button } from '../containers';
 
