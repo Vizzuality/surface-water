@@ -19,10 +19,10 @@ const rectangleStyles = {
 };
 
 const waterStyles = {
-  color: '#004d6b',
+  color: '#0E2456',
   weight: 1,
   opacity: 1,
-  fillColor: '#009fdd',
+  fillColor: '#0043DD',
   fillOpacity: 1,
   clickable: false
 };
