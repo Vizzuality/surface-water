@@ -1,6 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
+import ReactCSSTransitionGroup  from 'react-addons-css-transition-group';
 import {Map, Dashboard, Footer, LoadingSpinner, ErrorModal, SearchModal, ShareModal, SplashModal } from '../containers';
 
 import logo from '../../assets/logo2x_negative.png';
@@ -15,10 +16,20 @@ class MapPage extends Component {
           <img src={logo} alt="The Earth Genome" className={styles.logo} />
         </a>
         { this.props.loading && <LoadingSpinner/> }
-        { this.props.error && <ErrorModal text={this.props.error} /> }
-        { this.props.searchModal && <SearchModal /> }
-        { this.props.shareModal && <ShareModal /> }
-        { this.props.splashModal && <SplashModal /> }
+
+        <ReactCSSTransitionGroup
+          transitionName="modal"
+          transitionAppear={true}
+          transitionAppearTimeout={200}
+          transitionEnterTimeout={200}
+          transitionLeaveTimeout={200}
+        >
+          { this.props.error && <ErrorModal text={this.props.error} key="error" /> }
+          { this.props.searchModal && <SearchModal key="search" /> }
+          { this.props.shareModal && <ShareModal key="share" /> }
+          { this.props.splashModal && <SplashModal key="splash" /> }
+        </ReactCSSTransitionGroup>
+
         <Map
           zoom={this.props.zoom}
           latLng={[this.props.lat, this.props.lng]}

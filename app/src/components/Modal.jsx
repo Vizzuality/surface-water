@@ -25,12 +25,17 @@ class Modal extends Component {
   }
 
   render() {
+    let closeButton = (
+      <svg className={styles['close-button']} title="Close this modal" onClick={() => this.props.close()}>
+        <use xlinkHref="#closeIcon" x="0" y="0" />
+      </svg>
+    );
+    if(this.props.closeButton === false) closeButton = '';
+
     return (
       <div className={styles.overlay}  onClick={this.onClickOverlay.bind(this)}>
-        <div className={styles.modal}>
-          <svg className={styles['close-button']} title="Close this modal" onClick={() => this.props.close()}>
-            <use xlinkHref="#closeIcon" x="0" y="0" />
-          </svg>
+        <div className={`${styles.modal} ${this.props.background === 'bright' ? styles['-bright'] : ''} ${this.props.size === 'small' ? styles['-small'] : ''}`}>
+          { closeButton }
           { this.props.children }
         </div>
       </div>
@@ -43,7 +48,25 @@ Modal.propTypes = {
   /**
    * The callback method when closing the modal
    */
-  close:   React.PropTypes.func.isRequired
+  close: React.PropTypes.func.isRequired,
+  /**
+   * Define whether the close button should be available
+   * Values: true or false
+   * Default: true
+   */
+  closeButton: React.PropTypes.bool,
+  /**
+   * Define the background color
+   * Values: "dark", "bright"
+   * Default: "dark"
+   */
+  background: React.PropTypes.string,
+  /**
+   * Define the size of the modal
+   * Values: "normal" or "small"
+   * Default: "normal"
+   */
+  size: React.PropTypes.string
 };
 
 

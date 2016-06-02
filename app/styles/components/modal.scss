@@ -19,6 +19,11 @@
     padding: 60px 90px 80px 90px;
     background-color: $color-3;
 
+    &.-small {
+      padding: 40px 70px 40px 70px;
+      min-width: auto;
+    }
+
     > .close-button {
       position: absolute;
       top: 30px;
@@ -31,6 +36,65 @@
         transition: fill .3s;
       }
       &:hover > use { fill: $color-14; }
+    }
+
+    &.-bright {
+      background-color: $color-1;
+
+      >.close-button {
+        > use { fill: $color-3 }
+        &:hover > use { fill: $color-3; }
+      }
+    }
+  }
+}
+
+/* React animations for when the modal will appear */
+.animation-appear {
+  opacity: 0;
+  .modal { transform: scale(1.1); }
+
+  &.animation-appear-active {
+    opacity: 1;
+    transition: opacity .3s ease;
+
+    .modal {
+      transform: scale(1);
+      transition: transform .2s ease-out;
+      transition-delay: transform .1s;
+    }
+  }
+}
+
+/* Global animations for the modal */
+:global(.modal-enter), :global(.modal-appear) {
+  opacity: 0;
+  .modal { transform: scale(1.1); }
+
+  &:global(.modal-enter-active), &:global(.modal-appear-active) {
+    opacity: 1;
+    transition: opacity .3s ease;
+
+    .modal {
+      transform: scale(1);
+      transition: transform .2s ease-out;
+      transition-delay: transform .1s;
+    }
+  }
+}
+
+:global(.modal-leave) {
+  opacity: 1;
+  .modal { transform: scale(1); }
+
+  &:global(.modal-leave-active) {
+    opacity: 0;
+    transition: opacity .3s ease;
+
+    .modal {
+      transform: scale(1.1);
+      transition: transform .2s ease-out;
+      transition-delay: transform .1s;
     }
   }
 }
