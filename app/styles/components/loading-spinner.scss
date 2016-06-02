@@ -50,3 +50,22 @@
     }
   }
 }
+
+/* Global animations for the loading spinner */
+:global(.loading-spinner-enter), :global(.loading-spinner-appear) {
+  opacity: 0;
+
+  &:global(.loading-spinner-enter-active), &:global(.loading-spinner-appear-active) {
+    opacity: 1;
+    transition: opacity .3s ease;
+  }
+}
+
+:global(.loading-spinner-leave) {
+  opacity: 1;
+
+  &:global(.loading-spinner-leave-active) {
+    opacity: 0;
+    transition: opacity .3s ease;
+  }
+}

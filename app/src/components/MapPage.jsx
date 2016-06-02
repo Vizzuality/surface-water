@@ -15,7 +15,16 @@ class MapPage extends Component {
         <a href={`${location.origin}${location.pathname}`}>
           <img src={logo} alt="The Earth Genome" className={styles.logo} />
         </a>
-        { this.props.loading && <LoadingSpinner/> }
+
+        <ReactCSSTransitionGroup
+          transitionName="loading-spinner"
+          transitionAppear={true}
+          transitionAppearTimeout={200}
+          transitionEnterTimeout={200}
+          transitionLeaveTimeout={200}
+        >
+          { this.props.loading && <LoadingSpinner key="spinner" /> }
+        </ReactCSSTransitionGroup>
 
         <ReactCSSTransitionGroup
           transitionName="modal"
