@@ -4,6 +4,7 @@
   font-family: $font-family-1;
   font-size: $font-size-x-small;
   color: $color-13;
+  max-width: 440px;
 
   > h1 {
     font-size: $font-size-medium;
@@ -43,6 +44,10 @@
     > input::-moz-placeholder          { opacity: .6; }
 
     .icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       width: 16px;
       height: 16px;
       vertical-align: middle;
@@ -52,6 +57,7 @@
     .button {
       flex-basis: 120px;
       flex-shrink: 0;
+      position: relative;
     }
   }
 
@@ -84,5 +90,24 @@
         height: 19px;
       }
     }
+  }
+}
+
+/* Global animations for the copy button */
+:global(.button-copy-enter) {
+  opacity: 0;
+
+  &:global(.button-copy-enter-active) {
+    opacity: 1;
+    transition: transform .2s ease-out, opacity .3s ease;
+  }
+}
+
+:global(.button-copy-leave) {
+  opacity: 1;
+
+  &:global(.button-copy-leave-active) {
+    opacity: 0;
+    transition: transform .2s ease-out, opacity .3s ease;
   }
 }

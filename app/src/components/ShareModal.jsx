@@ -1,6 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
+import ReactCSSTransitionGroup  from 'react-addons-css-transition-group';
 import { Modal, Message, Button } from '../containers';
 
 import styles from '../../styles/components/share-modal.scss';
@@ -30,9 +31,9 @@ class ShareModal extends Component {
   }
 
   render() {
-    let buttonContent = 'Copy';
+    let buttonContent = <span key="text">Copy</span>;
     if(this.state.copied) {
-      buttonContent = <svg className={styles.icon}><use xlinkHref="#checkIcon" x="0" y="0" /></svg>;
+      buttonContent = <svg key="icon" className={styles.icon}><use xlinkHref="#checkIcon" x="0" y="0" /></svg>;
     }
 
     return (
@@ -43,7 +44,15 @@ class ShareModal extends Component {
           { this.state.error && <Message type="error" classes={[ styles.message ]}>{this.state.error}</Message> }
           <div className={styles['input-container']}>
             <input type="text" value={location.href} ref="input" readOnly={true} onClick={() => this.refs.input.select()} />
-            <Button fixed={true} color="primary" text="uppercase" click={this.onClickCopy.bind(this)} classes={[ styles.button ]}>{buttonContent}</Button>
+            <Button fixed={true} color="primary" text="uppercase" click={this.onClickCopy.bind(this)} classes={[ styles.button ]}>
+              <ReactCSSTransitionGroup
+                transitionName="button-copy"
+                transitionEnterTimeout={200}
+                transitionLeaveTimeout={200}
+              >
+                {buttonContent}
+              </ReactCSSTransitionGroup>
+            </Button>
           </div>
           <ul className={styles['media']}>
             <li>Share on</li>
