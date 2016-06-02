@@ -11,6 +11,11 @@ class SearchModal extends Component {
     this.refs.input.focus();
   }
 
+  componentWillUnmount() {
+    /* We wan't the error to disappear when the user re-opens the modal */
+    this.props.removeError();
+  }
+
   onKeyPress(e) {
     e.charCode === 13 && this.search(e.target.value);
   }

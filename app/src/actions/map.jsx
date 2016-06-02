@@ -237,6 +237,13 @@ export function search(location) {
   };
 };
 
+export function setSearchError(error) {
+  return {
+    type: SEARCH,
+    payload: { error }
+  };
+};
+
 export function deleteSearchBoundingBox() {
   return dispatch => {
     dispatch({

@@ -3,7 +3,7 @@
 import {connect} from 'react-redux';
 import SearchModal from '../components/SearchModal';
 
-import { toggleSearch, search } from '../actions/map';
+import { toggleSearch, search, setSearchError } from '../actions/map';
 
 const mapStateToProps = state => {
   return {
@@ -14,7 +14,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     close: () => dispatch(toggleSearch(false)),
-    search: str => dispatch(search(str))
+    search: str => dispatch(search(str)),
+    removeError: () => dispatch(setSearchError(null))
   };
 };
 
