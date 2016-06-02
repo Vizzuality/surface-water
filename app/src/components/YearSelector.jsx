@@ -67,6 +67,10 @@ class YearSelector extends Component {
     d3Axis.call(xAxis);
 
     d3Axis.selectAll('.tick')
+      .select('text')
+      .attr('transform', 'translate(0, 7)');
+
+    d3Axis.selectAll('.tick')
       .on('mouseover', year => {
         d3Axis.selectAll('circle')
           .filter(d => d.year === year)

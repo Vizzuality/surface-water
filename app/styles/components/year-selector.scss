@@ -54,7 +54,6 @@
         font-family: "MontSerrat", sans-serif;
         font-size: $font-size-tiny;
         letter-spacing: .4px;
-        transform: translateY(7px);
         cursor: pointer;
         transition: fill .3s;
         &:hover { fill: $color-2; }
