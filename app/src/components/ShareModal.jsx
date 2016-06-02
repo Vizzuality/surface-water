@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import { Message, Button } from '../containers';
+import { Modal, Message, Button } from '../containers';
 
 import styles from '../../styles/components/share-modal.scss';
 
@@ -10,22 +10,6 @@ class ShareModal extends Component {
   constructor() {
     super();
     this.state = {};
-  }
-
-  componentDidMount() {
-    this.onKeyPress = e => {
-      e.preventDefault();
-      e.keyCode === 27 && this.props.close();
-    }
-    document.addEventListener('keypress', this.onKeyPress);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('keypress', this.onKeyPress);
-  }
-
-  onClickOverlay(e) {
-    if(e.target === e.currentTarget) this.props.close();
   }
 
   onClickCopy() {
@@ -52,11 +36,8 @@ class ShareModal extends Component {
     }
 
     return (
-      <div className={styles.overlay}  onClick={this.onClickOverlay.bind(this)}>
-        <div className={styles.modal}>
-          <svg className={styles['close-button']} title="Close this modal" onClick={() => this.props.close()}>
-            <use xlinkHref="#closeIcon" x="0" y="0" />
-          </svg>
+      <Modal close={this.props.close}>
+        <div className={styles.content}>
           <h1>Share this map</h1>
           Copy the link to share this website
           { this.state.error && <Message type="error" classes={[ styles.message ]}>{this.state.error}</Message> }
@@ -70,7 +51,7 @@ class ShareModal extends Component {
             <li><a href={`https://twitter.com/home?status=${encodeURIComponent(`Water detection: ${location.href}`)}`} target="_blank" rel="noreferrer"><svg className={styles.icon}><use xlinkHref="#twitterIcon" x="0" y="0" /></svg></a></li>
           </ul>
         </div>
-      </div>
+      </Modal>
     );
   }
 

@@ -4,6 +4,7 @@ export Dashboard from './dashboard';
 export Footer from './footer';
 export Button from './button';
 export LoadingSpinner from './loadingSpinner';
+export Modal from './modal';
 export ErrorModal from './errorModal';
 export MapSearchControl from './mapSearchControl';
 export SearchModal from './searchModal';
