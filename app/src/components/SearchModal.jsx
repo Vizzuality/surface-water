@@ -11,7 +11,19 @@ class SearchModal extends Component {
     this.refs.input.focus();
   }
 
-  onKeyPress(e) {
+  componentDidMount() {
+    this.onKeyPress = e => {
+      e.preventDefault();
+      e.keyCode === 27 && this.props.close();
+    }
+    document.addEventListener('keypress', this.onKeyPress);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keypress', this.onKeyPress);
+  }
+
+  onKeyDown(e) {
     if(e.charCode === 13) {
       this.search(e.target.value);
     }
@@ -35,7 +47,7 @@ class SearchModal extends Component {
           Where would you like to explore?
           { this.props.error && <Message type="error" classes={[ styles.message ]}>{this.props.error}</Message> }
           <div className={styles['input-container']}>
-            <input type="text" placeholder="E.g.: Address, city, country…" onKeyPress={this.onKeyPress.bind(this)} ref="input" />
+            <input type="text" placeholder="E.g.: Address, city, country…" onKeyPress={this.onKeyDown.bind(this)} ref="input" />
             <svg title="Search" onClick={() => this.search(this.refs.input.value)}>
               <use xlinkHref="#searchIcon" x="0" y="0" />
             </svg>

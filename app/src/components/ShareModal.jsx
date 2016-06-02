@@ -12,6 +12,18 @@ class ShareModal extends Component {
     this.state = {};
   }
 
+  componentDidMount() {
+    this.onKeyPress = e => {
+      e.preventDefault();
+      e.keyCode === 27 && this.props.close();
+    }
+    document.addEventListener('keypress', this.onKeyPress);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keypress', this.onKeyPress);
+  }
+
   onClickOverlay(e) {
     if(e.target === e.currentTarget) this.props.close();
   }
