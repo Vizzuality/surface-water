@@ -57,7 +57,7 @@ class ShareModal extends Component {
           <ul className={styles['media']}>
             <li>Share on</li>
             <li><a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(location.href)}`} target="_blank" rel="noreferrer"><svg className={styles.icon}><use xlinkHref="#fbIcon" x="0" y="0" /></svg></a></li>
-            <li><a href={`https://twitter.com/home?status=${encodeURIComponent(`Water detection: ${location.href}`)}`} target="_blank" rel="noreferrer"><svg className={styles.icon}><use xlinkHref="#twitterIcon" x="0" y="0" /></svg></a></li>
+            <li><a href={`https://twitter.com/home?status=${encodeURIComponent(`Surface Water: A web app to monitor surface water from NASA satellite imagery ${location.href}`)}`} target="_blank" rel="noreferrer"><svg className={styles.icon}><use xlinkHref="#twitterIcon" x="0" y="0" /></svg></a></li>
           </ul>
         </div>
       </Modal>
