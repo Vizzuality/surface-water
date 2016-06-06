@@ -10,6 +10,7 @@ Start by installing the required nodejs packages using `npm` (already bundled wi
 
 ```
 npm install
+npm install file-loader --save
 ```
 
 Next, start the server by running:

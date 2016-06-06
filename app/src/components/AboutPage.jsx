@@ -44,7 +44,11 @@ class AboutPage extends Component {
         <svg className={styles['close-button']} onClick={this.goBack.bind(this)}><use xlinkHref="#closeIcon" x="0" y="0" /></svg>
         <div className={styles.content}>
           <h1>About this project</h1>
-          <p className={styles.intro}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean faucibus ex interdum nulla feugiat vestibulum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+
+          <p className={styles.intro}>
+            This project
+          </p>
+
           <h2>What does the data means?</h2>
           <p>Mauris rutrum augue et velit facilisis faucibus quis nec mi. Aenean placerat, dui ut pulvinar lobortis, ligula nulla finibus orci, ut molestie sapien eros sed nisi. Nunc sollicitudin nunc non justo lobortis mattis. Aenean at ullamcorper neque. Nullam velit diam, consequat sed arcu sed, varius molestie dolor.<br/>Donec vel elementum odio. Nulla a nibh quis turpis elementum finibus id non eros. Curabitur porttitor, odio eu mollis porta, nulla sem congue sapien, vestibulum blandit augue sem id mi. Proin congue fringilla est id efficitur. Maecenas pulvinar facilisis ante, vitae congue nulla semper ac. Mauris dapibus mollis odio a facilisis. Proin dapibus metus in risus egestas hendrerit. Praesent egestas ipsum elit, ac accumsan lectus consequat sit amet. Donec facilisis sem quis mauris dapibus, ut imperdiet massa porta.</p>
           <h2>Why is this important?</h2>

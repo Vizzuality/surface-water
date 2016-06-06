@@ -3,8 +3,8 @@ import {SELECTED_AREA, MODE, ZOOM, LATLNG, YEAR, ACTION, LOADING, ERROR, DATA, S
 const initialState = {
   selectedArea: null,
   mode: null,
-  zoom: 10,
-  latLng: [41.67855338051137, -120.43624877929688],
+  zoom: 11,
+  latLng: [39.271,-119.791],
   basemap: 'terrain',
   year: null,
   action: null,
