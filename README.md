@@ -1,4 +1,6 @@
-# Earth Genome water detection
+# Surface Water
+
+![Water detection from NASA Landsat data](http://water.earthgenome.org/hero.png)
 
 # Requirements
 
