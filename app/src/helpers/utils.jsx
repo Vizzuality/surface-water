@@ -48,3 +48,19 @@ export function fetchWithTimeout(url, timeout) {
     setTimeout(() => reject(new Error('timeout')), timeout);
   });
 };
+
+/**
+ * Return the contact email used accross the website. The aim of the function is
+ * to hide the real email address to the bots by decoding the ROT13-encoded
+ * version of it.
+ * @return {String} contact email
+ */
+export function generateContactEmail() {
+  const contactEmail = 'qna@rnegutrabzr.bet';
+  const decoder = str => {
+    return str.replace(/[a-zA-Z]/g, c => {
+      return String.fromCharCode((c <= 'Z' ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26);
+    });
+  };
+  return decoder(contactEmail);
+};

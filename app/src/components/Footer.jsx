@@ -1,12 +1,10 @@
 'use strict';
 
 import React, {Component} from 'react';
+import { generateContactEmail } from '../helpers/utils';
 import { Link } from 'react-router';
 
 import styles from '../../styles/components/footer.scss';
-
-/* We use rot13 to avoid bots spamming the email */
-const contactEmail = 'qna@rnegutrabzr.bet';
 
 class Footer extends Component {
 
@@ -21,7 +19,7 @@ class Footer extends Component {
       <div className={styles.footer}>
         <ul className={styles.menu}>
           <li className={styles['menu-item'] + ' ' + styles['menu-item-highlight']} onClick={() => this.props.goTo('/about')}>Know more</li>
-          <li className={styles['menu-item']}><a href={`mailto:${this.decodeRot13(contactEmail)}`}>Contact</a></li>
+          <li className={styles['menu-item']}><a href={`mailto:${generateContactEmail()}`}>Contact</a></li>
           <li className={styles['menu-item']}>A data visualisation by <a href="http://www.vizzuality.com" target="_blank" rel="noreferrer"><svg className={styles['vizzuality-logo']}><use xlinkHref="#vizzualityIcon" x="0" y="0" /></svg></a></li>
         </ul>
         <svg className={styles.share} onClick={this.props.toggleShare} title="Share"><use xlinkHref="#shareIcon" x="0" y="0" /></svg>

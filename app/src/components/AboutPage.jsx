@@ -1,6 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
+import { generateContactEmail } from '../helpers/utils';
 import { Link } from 'react-router';
 import { Button } from '../containers';
 
@@ -60,7 +61,7 @@ class AboutPage extends Component {
           <h2>Where does the data come from?</h2>
 
           <p>
-            The surface water extent is constructed on the fly for the supplied area, using Landsat 7 annual composite imagery. The service is available globally at 30-meter resolution from 1999 through 2012. More specifically, the coverage percentage is calculated at 30-meter resolution but the polygon extent has been resampled to 200-meter resolution for web performance. The detection algorithm is adapted from <a href="http://www.sciencedirect.com/science/article/pii/S0034425713002873">a peer-reviewed publication</a> in Remote Sensing of the Environment. The algorithm has its limitations for certain regions. If you are interested in a more in-depth, customized data set, please <a href="mailto:dan@earthgenome.org">contact us</a>.
+            The surface water extent is constructed on the fly for the supplied area, using Landsat 7 annual composite imagery. The service is available globally at 30-meter resolution from 1999 through 2012. More specifically, the coverage percentage is calculated at 30-meter resolution but the polygon extent has been resampled to 200-meter resolution for web performance. The detection algorithm is adapted from <a href="http://www.sciencedirect.com/science/article/pii/S0034425713002873">a peer-reviewed publication</a> in Remote Sensing of the Environment. The algorithm has its limitations for certain regions. If you are interested in a more in-depth, customized data set, please <a href={`mailto:${generateContactEmail()}`}>contact us</a>.
           </p>
 
           <p>
@@ -76,7 +77,7 @@ class AboutPage extends Component {
           <h2>And then what?</h2>
 
           <p>
-            This web app is just the beginning. You can either use the APIs for your own application, generate a dataset for a given set of administrative boundaries, or build a custom instance of the web app with increased spatial resolution and temporal frequency. If you are interested in any of these services, please <a href="mailto:dan@earthgenome.org">contact us</a>.
+            This web app is just the beginning. You can either use the APIs for your own application, generate a dataset for a given set of administrative boundaries, or build a custom instance of the web app with increased spatial resolution and temporal frequency. If you are interested in any of these services, please <a href={`mailto:${generateContactEmail()}`}>contact us</a>.
           </p>
 
           <Button color="primary" text="uppercase" classes={[ styles.button ]} click={this.goBack.bind(this)}>Explore the map</Button>
