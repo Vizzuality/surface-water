@@ -14,7 +14,7 @@ class SplashModal extends Component {
           <h1>Water Detection from NASA Landsat data</h1>
           <p>
           
-            This tool measures the extent of global surface water at 30-meter resolution, annually from 1999-2012.  If you are interested in our real-time monitoring project, please contact us!
+            This tool measures the extent of global surface water at 30-meter resolution, annually from 1999-2012.  If you are interested in real-time water monitoring, please contact us!
           
           </p>
           <Button color="primary" text="uppercase" click={() => this.props.close()}>Explore the map</Button>

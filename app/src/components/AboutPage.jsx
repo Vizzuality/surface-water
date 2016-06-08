@@ -46,13 +46,39 @@ class AboutPage extends Component {
           <h1>About this project</h1>
 
           <p className={styles.intro}>
-            This project
+            <a href="http://earthgenome.org">The Earth Genome&#39;s</a> mission is to provide environmental information that <b>changes decisions</b>. This project, alone, <i>will not</i> change decisions.  More information must be blended in order to provide material insights to a specific decision maker -- groundwater levels, well locations, agricultural patterns.  The data embodied in this surface water project is meant to be a component of a decision support tool.  
+
+            <p> </p>
+
+            Another Earth Genome project, <a href="http://gist.earthgenome.org">GIST</a>, is a fully formed decision support tool -- one that assembles multiple data sets into a compact, actionable number.  The web app makes it easy to assess the value of wetland restoration in Texas.  Surface water is a component of the final product.  
+
+            <p> </p>
+
+             The web application is meant to demonstrate the value of easy access and intuitive design for environmental information.  The frontend was built by Vizzuality and the backend was built by The Earth Genome.  We communicated only by <a href="https://en.wikipedia.org/wiki/Representational_state_transfer">RESTful web APIs</a>, so that any third-party app developer can also easily use the data.  It’s insane that a web developer could easily and programmatically access Justin Bieber’s latest tweet, but could not access the extent of surface water or the intensity of deforestation with the same ease -- until now.  
+          
           </p>
 
-          <h2>What does the data means?</h2>
-          <p>Mauris rutrum augue et velit facilisis faucibus quis nec mi. Aenean placerat, dui ut pulvinar lobortis, ligula nulla finibus orci, ut molestie sapien eros sed nisi. Nunc sollicitudin nunc non justo lobortis mattis. Aenean at ullamcorper neque. Nullam velit diam, consequat sed arcu sed, varius molestie dolor.<br/>Donec vel elementum odio. Nulla a nibh quis turpis elementum finibus id non eros. Curabitur porttitor, odio eu mollis porta, nulla sem congue sapien, vestibulum blandit augue sem id mi. Proin congue fringilla est id efficitur. Maecenas pulvinar facilisis ante, vitae congue nulla semper ac. Mauris dapibus mollis odio a facilisis. Proin dapibus metus in risus egestas hendrerit. Praesent egestas ipsum elit, ac accumsan lectus consequat sit amet. Donec facilisis sem quis mauris dapibus, ut imperdiet massa porta.</p>
-          <h2>Why is this important?</h2>
-          <p>Vestibulum ultrices odio quis magna aliquet imperdiet. Phasellus suscipit non augue quis condimentum. Suspendisse quis massa in odio maximus faucibus bibendum non felis. Integer congue libero at odio placerat molestie. In porttitor purus sapien, ac viverra nunc venenatis eget.<br/>Aenean ullamcorper semper nunc ac consectetur. Nulla ornare gravida nibh, in feugiat lacus sagittis quis. Nunc interdum facilisis nibh, eget tristique eros tempor quis. Donec at nibh nec arcu facilisis imperdiet ut sed leo. Pellentesque aliquam massa sit amet tortor auctor sollicitudin. Morbi in justo et leo varius tincidunt. Curabitur convallis libero ut nisi convallis egestas. Curabitur ornare porta erat at pulvinar. Proin consectetur, tortor nec hendrerit dictum, magna orci ultrices ipsum, quis aliquet turpis enim id velit. Vivamus condimentum vitae erat sed faucibus. In molestie, purus quis ornare blandit, dui purus ultrices tortor, quis maximus ligula augue ac turpis. Proin venenatis faucibus justo nec volutpat. Nunc efficitur dolor quis massa tempus rhoncus.</p>
+          <h2>Where does the data come from?</h2>
+
+          <p> 
+            The surface water extent is constructed on the fly for the supplied area, using Landsat 7 annual composite imagery.  The service is available globally at 30-meter resolution from 1999 through 2012.  More specifically, the coverage percentage is calculated at 30-meter resolution but the polygon extent has been resampled to 200-meter resolution for web performance.  The detection algorithm is adapted from <a href="http://www.sciencedirect.com/science/article/pii/S0034425713002873">a peer-reviewed publication</a> in Remote Sensing of the Environment.  The algorithm has its limitations for certain regions.  If you are interested in a more in-depth, customized data set, please <a href="mailto:dan@earthgenome.org">contact us</a>.
+
+            <p> </p>
+
+            The basemap highlights the static extent of water in blue.  These boundaries represent the water bodies that you would see in Google or Apple Maps.  They don’t change.  Water is fluid and changes constantly.  This project shows the dynamic extent of water, tracking surface water as it changes with climate, human, and weather forces.
+          </p>
+
+          <h2>How do I use the site?</h2>
+
+          <p>
+            Navigate to an area of interest.  Draw a bounding box.  Wait for a few seconds.  The average extent of water in 2012 will appear in dark blue.  The annual percentage of water will appear as a time series graph below, from 1999-2012.  Click the arrows or the years below the time series to cycle through the years.
+          </p>
+
+          <h2>And then what?</h2>
+
+          <p>
+            This web app is just the beginning.  You can either use the APIs for your own application, generate a dataset for a given set of administrative boundaries, or build a custom instance of the web app with increased spatial resolution and temporal frequency.  If you are interested in any of these services, please <a href="mailto:dan@earthgenome.org">contact us</a>.
+          </p>
             <Button color="primary" text="uppercase" classes={[ styles.button ]} click={this.goBack.bind(this)}>Explore the map</Button>
         </div>
       </div>
