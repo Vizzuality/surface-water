@@ -54,17 +54,29 @@
       letter-spacing: .8px;
       color: $color-7;
       text-transform: uppercase;
+      margin-top: 50px;
+    }
+
+    p {
+      margin-top: 5px;
+      margin-bottom: 0;
     }
 
     .intro {
       font-size: $font-size-medium;
       line-height: 32px;
       color: $color-7;
-      margin-bottom: 70px;
+      margin-top: 50px;
+      > p { margin-top: 10px; }
     }
 
     .button {
       margin-top: 60px;
+    }
+
+    a {
+      color: $color-21;
+      text-decoration: none;
     }
   }
 }
