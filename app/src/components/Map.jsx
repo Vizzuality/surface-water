@@ -27,6 +27,17 @@ const waterStyles = {
   clickable: false
 };
 
+const mapLayers = {
+  satellite: {
+    id: 'dangenome.5173acb5',
+    token: 'pk.eyJ1IjoiZGFuZ2Vub21lIiwiYSI6ImNpcGRjZXl4eTAwMDlzcm5vb3IyeXRrenkifQ.IP-Ncd_XtB6ElBXgKjStoA'
+  },
+  terrain: {
+    id: 'dangenome.f49e7ca6',
+    token: 'pk.eyJ1IjoiZGFuZ2Vub21lIiwiYSI6ImNpcGRjZXl4eTAwMDlzcm5vb3IyeXRrenkifQ.IP-Ncd_XtB6ElBXgKjStoA'
+  }
+};
+
 const noDataError = 'It seems there\'s no data for the selected area.';
 
 class Map extends Component {
@@ -94,34 +105,36 @@ class Map extends Component {
   }
 
   initBasemaps() {
-    this.terrainBasemapMap = L.tileLayer(`https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}${window.devicePixelRatio >= 2 ? '@2x' : ''}.png?access_token={accessToken}`, {
+    const baseUrl = `https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}${window.devicePixelRatio >= 2 ? '@2x' : ''}.png?access_token={accessToken}`;
+
+    this.terrainBasemapMap = L.tileLayer(baseUrl, {
       attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-      id: 'mst-trail.812c1ba5',
-      accessToken: 'pk.eyJ1IjoibXN0LXRyYWlsIiwiYSI6ImNpb3ZhYW83dzAwNjV3OWtqY2psb2tmY28ifQ.M9Apjn7kvtfpMwbSf9kNYA',
+      id: mapLayers.terrain.id,
+      accessToken: mapLayers.terrain.token,
       noWrap: true,
       minZoom: 2
     });
 
-    this.satelliteBasemapMap = L.tileLayer(`https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}${window.devicePixelRatio >= 2 ? '@2x' : ''}.png?access_token={accessToken}`, {
+    this.satelliteBasemapMap = L.tileLayer(baseUrl, {
       attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-      id: 'mstg.e176fba3',
-      accessToken: 'pk.eyJ1IjoibXN0ZyIsImEiOiJjaWs4ajl2N2MwMDF3d2JsdzNrYmc3bm1wIn0.sD0TMuradtGVcjaPuwZOwA',
+      id: mapLayers.satellite.id,
+      accessToken: mapLayers.satellite.token,
       noWrap: true,
       minZoom: 2
     });
 
-    this.terrainBasemapMinimap = L.tileLayer(`https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}${window.devicePixelRatio >= 2 ? '@2x' : ''}.png?access_token={accessToken}`, {
+    this.terrainBasemapMinimap = L.tileLayer(baseUrl, {
       attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-      id: 'mst-trail.812c1ba5',
-      accessToken: 'pk.eyJ1IjoibXN0LXRyYWlsIiwiYSI6ImNpb3ZhYW83dzAwNjV3OWtqY2psb2tmY28ifQ.M9Apjn7kvtfpMwbSf9kNYA',
+      id: mapLayers.terrain.id,
+      accessToken: mapLayers.terrain.token,
       noWrap: true,
       minZoom: 2
     });
 
-    this.satelliteBasemapMinimap = L.tileLayer(`https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}${window.devicePixelRatio >= 2 ? '@2x' : ''}.png?access_token={accessToken}`, {
+    this.satelliteBasemapMinimap = L.tileLayer(baseUrl, {
       attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-      id: 'mstg.e176fba3',
-      accessToken: 'pk.eyJ1IjoibXN0ZyIsImEiOiJjaWs4ajl2N2MwMDF3d2JsdzNrYmc3bm1wIn0.sD0TMuradtGVcjaPuwZOwA',
+      id: mapLayers.satellite.id,
+      accessToken: mapLayers.satellite.token,
       noWrap: true,
       minZoom: 2
     });
