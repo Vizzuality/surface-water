@@ -2,7 +2,7 @@
 
 import {connect} from 'react-redux';
 import Map from '../components/Map';
-import {setMode, setAction, deleteSearchBoundingBox} from '../actions/map';
+import {setMode, setAction, deleteSearchBoundingBox, setError} from '../actions/map';
 
 const mapStateToProps = state => {
   return {
@@ -23,7 +23,8 @@ const mapDispatchToProps = dispatch => {
   return {
     setMode: mode => dispatch(setMode(mode)),
     setAction: action => dispatch(setAction(action)),
-    resetBoundingBox: () => dispatch(deleteSearchBoundingBox())
+    resetBoundingBox: () => dispatch(deleteSearchBoundingBox()),
+    showError: text => dispatch(setError(text))
   };
 }
 

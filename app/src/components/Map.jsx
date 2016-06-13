@@ -38,7 +38,10 @@ const mapLayers = {
   }
 };
 
+const extentLimit = 300000; /* In ha */
+
 const noDataError = 'It seems there\'s no data for the selected area.';
+const tooBigAreaError = 'Please draw a rectangle with an area smaller than 300,000ha.';
 
 class Map extends Component {
 
@@ -186,7 +189,14 @@ class Map extends Component {
       /* Zooming can move the center of the map */
       this.props.setLatLng(this.map.getCenter());
     });
-    this.map.on('draw:created', e => this.saveRectangle(e.layer));
+    this.map.on('draw:created', e => {
+      if(this.getRectangleArea(e.layer) > extentLimit) {
+        this.props.showError(tooBigAreaError);
+        this.props.setMode(null);
+      } else {
+        this.saveRectangle(e.layer)
+      }
+    });
   }
 
   /**
@@ -290,6 +300,16 @@ class Map extends Component {
 
     return Object.keys(southWest).map(k => southWest[k])
       .concat(Object.keys(northEast).map(k => northEast[k]));
+  }
+
+  /**
+   * Return the surface of the rectangle in ha
+   * @param  {Object} rectangle rectangle
+   * @return {Number}           area
+   */
+  getRectangleArea(rectangle) {
+    const latLngs = rectangle.getLatLngs();
+    return L.GeometryUtil.geodesicArea(latLngs) * 0.0001;
   }
 
   /**
